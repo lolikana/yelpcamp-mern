@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "rootDir": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["vite/client"],
+    "sourceMap": true,
+    "outDir": "./dist",
+    "allowJs": false
+  },
+  "exclude": ["node_modules"],
+  "include": ["src", "**/*.tsx", "vite.config.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
