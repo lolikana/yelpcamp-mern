@@ -8,6 +8,7 @@
     "client:prod": "cd client && npm run preview",
     "server": "cd server && npm run server",
     "lint": "eslint --fix -f table './**/*.{ts,tsx}'",
+    "lint-staged": "lint-staged",
     "prettier-format": "prettier --config .prettierrc './**/*.{tsx,ts,css,scss,json}' --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +17,13 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "lint-staged": {
+    "./**/*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix -f table"
+    ],
+    "./**/*.{scss,css,json,cjs}": "prettier --write"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +41,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
     "typescript": "^5.0.2"
   }
