@@ -9,7 +9,9 @@ function App() {
 
   return (
     <>
-      <h1 className={styles.title}>{headTitleRef.current}</h1>
+      <h1 data-testid="title" className={styles.title}>
+        {headTitleRef.current}
+      </h1>
     </>
   );
 }
