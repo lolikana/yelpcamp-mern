@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import { RequestHandler } from 'express';
+import jwt from 'jsonwebtoken';
 
+import { isProduction } from './../configs/mongodb';
 import { ISignup } from './../libs/types';
 import { User } from './../models';
 import { ExpressError } from './../utils';
@@ -44,7 +46,15 @@ export default {
       });
 
       await newUser.save();
-      return res.redirect('/login');
+
+      const uid = newUser.id as string;
+      const token = jwt.sign(
+        { userId: uid, email: newUser.email },
+        isProduction ? (process.env.JWT_SECRET as string) : 'supersecret_dont_share',
+        { expiresIn: '1h' }
+      );
+
+      return res.status(201).send({ userId: uid, email: newUser.email, token });
     } catch (err) {
       return next(err);
     }
@@ -60,8 +70,22 @@ export default {
         );
         return next(error);
       }
-
-      return res.send(result.data);
+      const user = await User.findOne({ email: result.data.email });
+      if (!user) {
+        const error = new ExpressError('No user with this email was found.', 500);
+        return next(error);
+      }
+      const uid = user.id as string;
+      const token = jwt.sign(
+        { userId: uid, email: user.email },
+        isProduction ? (process.env.JWT_SECRET as string) : 'supersecret_dont_share',
+        { expiresIn: '1h' }
+      );
+      return res.json({
+        userId: uid,
+        email: user.email,
+        token
+      });
     } catch (err) {
       return next(err);
     }
