@@ -4,7 +4,7 @@ import { RequestHandler } from 'express';
 import { ISignup } from './../libs/types';
 import { User } from './../models';
 import { ExpressError } from './../utils';
-import { signupSchema } from './../utils/validations';
+import { loginSchema, signupSchema } from './../utils/validations';
 
 export default {
   singup: (async (req, res, next) => {
@@ -45,14 +45,24 @@ export default {
 
       await newUser.save();
       return res.redirect('/login');
-    } catch (err: unknown) {
-      if (err instanceof Error) {
+    } catch (err) {
+      return next(err);
+    }
+  }) as RequestHandler,
+
+  login: (async (req, res, next) => {
+    try {
+      const result = await loginSchema.safeParseAsync(req.body);
+      if (!result.success) {
         const error = new ExpressError(
-          `Something went wrong when trying to sign up: ${err.message}`,
+          `Error when tried to login: ${result.error.issues[0].message}`,
           500
         );
         return next(error);
       }
+
+      return res.send(result.data);
+    } catch (err) {
       return next(err);
     }
   }) as RequestHandler

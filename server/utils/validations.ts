@@ -1,4 +1,7 @@
+import bcrypt from 'bcryptjs';
 import { z } from 'zod';
+
+import { User } from './../models';
 
 export const signupSchema = z
   .object({
@@ -33,4 +36,28 @@ export const signupSchema = z
   .refine(data => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
     message: 'Password do not match'
+  });
+
+export const loginSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, { message: 'An email is required' })
+      .email({ message: 'Invalid email address' })
+      .refine(value => {
+        if (value === 'test@test.com') return false;
+        return true;
+      }, 'You cannot login with this email'),
+    password: z.string({ required_error: 'A password is required' }).trim()
+  })
+  .refine(async data => {
+    const isUserExist = await User.findOne({ email: data.email });
+    if (!isUserExist) return Promise.reject('This email is not in our database.');
+    const isSamePassword = await bcrypt.compare(
+      data.password,
+      isUserExist.password as string
+    );
+    if (!isSamePassword) return Promise.reject('Wrong password');
+
+    return Promise.resolve(true);
   });
