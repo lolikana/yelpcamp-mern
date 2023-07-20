@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { RequestHandler } from 'express';
 
 import { ISignup } from './../libs/types';
@@ -25,11 +26,23 @@ export default {
         const error = new ExpressError(result.error.issues[0].message, 422);
         return next(error);
       }
+
+      const password = result.data.password;
+      const hashedPassword = await bcrypt.hash(password, 12);
+      if (!hashedPassword) {
+        const error = new ExpressError(
+          'Something went wrong when creating password.',
+          500
+        );
+        return next(error);
+      }
+
       const newUser = new User({
         username: result.data.username,
         email: result.data.email,
-        password: result.data.password
+        password: hashedPassword
       });
+
       await newUser.save();
       return res.redirect('/login');
     } catch (err: unknown) {
