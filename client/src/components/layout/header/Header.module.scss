@@ -1,0 +1,27 @@
+@import '@styles/styles.scss';
+
+.header {
+  height: 4rem;
+  padding: 0 1rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  cursor: pointer;
+
+  img {
+    width: 3rem;
+  }
+
+  span {
+    font-size: 2rem;
+    font-weight: $__bold;
+  }
+}

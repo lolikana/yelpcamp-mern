@@ -1,17 +1,12 @@
-import { useRef } from 'react';
-
-import styles from './App.module.scss';
-import useTitle from './hooks/use-title';
+import { Layout } from '@components/layout';
+import Homepage from '@pages/homepage/Homepage';
 
 function App() {
-  const headTitleRef = useRef<string>('HOMEPAGE');
-  useTitle(headTitleRef.current);
-
   return (
     <>
-      <h1 data-testid="title" className={styles.title}>
-        {headTitleRef.current}
-      </h1>
+      <Layout>
+        <Homepage />
+      </Layout>
     </>
   );
 }
