@@ -18,6 +18,10 @@ $__breakpoints: (
   }
 }
 
+@mixin font-responsive($min, $max) {
+  font-size: calc(#{$min}rem + (#{$max} - #{$min}) * ((100vw - 375px) / (1600 - 375)));
+}
+
 // Define vertical, horizontal, or both position
 @mixin position-alignment($position) {
   position: $__absolute;

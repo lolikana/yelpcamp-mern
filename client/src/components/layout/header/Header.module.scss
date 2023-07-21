@@ -2,7 +2,7 @@
 
 .header {
   height: 4rem;
-  padding: 0 1rem;
+  margin: 0 1rem;
 
   display: flex;
   align-items: center;
@@ -21,7 +21,7 @@
   }
 
   span {
-    font-size: 2rem;
+    @include font-responsive(1.5, 2);
     font-weight: $__bold;
   }
 }
