@@ -3,4 +3,17 @@
   background-image: url('src/assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
   background-size: cover;
   background-position: 50% 50%;
+  @extend %flex-center;
+}
+
+.homepage__presentation {
+  color: $__main;
+  width: 80%;
+  padding: 1rem;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.homepage__presentation_title {
+  font-size: 2rem;
 }
