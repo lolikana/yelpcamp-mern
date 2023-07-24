@@ -9,7 +9,6 @@
     "baseUrl": ".",
     "rootDir": "./",
     "paths": {
-      "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
       "@pages/*": ["./src/pages/*"],
       "@assets/*": ["./src/assets/*"],
