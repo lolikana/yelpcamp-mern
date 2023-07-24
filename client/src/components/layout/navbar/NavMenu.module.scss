@@ -1,5 +1,4 @@
 .menu {
-  z-index: 1000;
   @extend %flex-center;
   flex-direction: column;
   gap: 2rem;
@@ -16,6 +15,7 @@
   color: $__sub;
 
   transition: all 500ms ease;
+  @include box-shadow(inset, 0px, 5px, 10px, -5px, rgba(0, 0, 0, 1));
 }
 
 .menu[aria-hidden='false'] {
