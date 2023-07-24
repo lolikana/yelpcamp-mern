@@ -1,6 +1,12 @@
 /** Configs **/
 @import './configs/reset';
 
+/* Stop animations Nav Bar during window resizing/Loading */
+.resize-animation-stopper * {
+  transition: none !important;
+  animation: none !important;
+}
+
 body {
   font-family:
     'Ysabeau SC',
