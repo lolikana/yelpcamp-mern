@@ -1,3 +1,5 @@
+import '@styles/styles.scss';
+
 import { Layout } from '@components/layout';
 import Homepage from '@pages/homepage/Homepage';
 
