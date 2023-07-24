@@ -8,11 +8,11 @@ const Homepage = () => {
   useTitle(headTitleRef.current);
 
   return (
-    <div>
+    <section className={styles.homepage}>
       <h1 data-testid="title" className={styles.title}>
         {headTitleRef.current}
       </h1>
-    </div>
+    </section>
   );
 };
 

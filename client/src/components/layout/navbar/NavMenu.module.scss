@@ -2,26 +2,22 @@
   @extend %flex-center;
   flex-direction: column;
   gap: 2rem;
-
   width: 100%;
   height: 0;
   opacity: 0;
-
   position: absolute;
   top: 4rem;
   left: 0;
-
   font-size: 2rem;
   color: $__sub;
-
   transition: all 500ms ease;
   @include box-shadow(inset, 0px, 5px, 10px, -5px, rgba(0, 0, 0, 1));
 }
 
 .menu[aria-hidden='false'] {
-  height: calc(100% - 4rem);
+  height: calc(100vh - 4rem);
   opacity: 1;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .menu__item {
@@ -32,7 +28,7 @@
 .menu__item::after {
   content: '';
   position: absolute;
-  bottom: -0.5rem;
+  bottom: -0.25rem;
   left: 50%;
   transform: translateX(-50%) scaleX(0);
   width: 100%;
@@ -55,5 +51,11 @@
     padding-right: 2rem;
     font-size: 1.25rem;
     top: 0;
+  }
+
+  .menu[aria-hidden='false'] {
+    height: 100%;
+    background-color: transparent;
+    box-shadow: inherit;
   }
 }
