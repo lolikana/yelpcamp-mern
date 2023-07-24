@@ -47,6 +47,10 @@ export default defineConfig(({ command }) => {
         {
           find: '@styles',
           replacement: path.resolve(__dirname, 'src/styles')
+        },
+        {
+          find: '@__test__',
+          replacement: path.resolve(__dirname, '__tests__')
         }
       ]
     },
@@ -67,7 +71,7 @@ export default defineConfig(({ command }) => {
       globals: true,
       environment: 'jsdom',
       setupFiles: './__tests__/setup.ts',
-      exclude: ['node_modules', './__tests__/setup.ts']
+      exclude: ['node_modules', './__tests__/setup.ts', './__tests__/renderWithRouter.ts']
     },
     server: {
       port: 4000

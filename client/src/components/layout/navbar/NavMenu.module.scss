@@ -1,4 +1,59 @@
 .menu {
-  display: flex;
-  gap: 1rem;
+  z-index: 1000;
+  @extend %flex-center;
+  flex-direction: column;
+  gap: 2rem;
+
+  width: 100%;
+  height: 0;
+  opacity: 0;
+
+  position: absolute;
+  top: 4rem;
+  left: 0;
+
+  font-size: 2rem;
+  color: $__sub;
+
+  transition: all 500ms ease;
+}
+
+.menu[aria-hidden='false'] {
+  height: calc(100% - 4rem);
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.menu__item {
+  position: relative;
+  cursor: pointer;
+}
+
+.menu__item::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 100%;
+  height: 1px;
+  background-color: black;
+  transition: transform 0.3s ease-out;
+}
+
+.menu__item:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+@include mq('custom600') {
+  .menu {
+    position: relative;
+    opacity: 1;
+
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 2rem;
+    font-size: 1.25rem;
+    top: 0;
+  }
 }

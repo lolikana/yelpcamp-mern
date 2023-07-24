@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import styles from './NavMenu.module.scss';
 
-const NavMenu: FC = () => {
+const NavMenu: FC<{ isHidden: boolean }> = ({ isHidden }) => {
   return (
-    <ul className={styles.menu}>
+    <ul aria-hidden={isHidden} className={styles.menu}>
       <li className={styles.menu__item}>
         <Link to="/campgrounds">Campgrounds</Link>
       </li>

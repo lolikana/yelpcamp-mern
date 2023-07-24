@@ -12,7 +12,8 @@
       "@components/*": ["./src/components/*"],
       "@pages/*": ["./src/pages/*"],
       "@assets/*": ["./src/assets/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "@__tests__/*": ["./__tests__/*"]
     },
     "types": ["vite/client"],
     "sourceMap": true,
