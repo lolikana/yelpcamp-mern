@@ -1,6 +1,7 @@
 import CampLogo from '@assets/logo/yelpcamp.png';
 import { useNavigate } from 'react-router-dom';
 
+import Navbar from '../navbar/Navbar';
 import styles from './Header.module.scss';
 
 const Header = () => {
@@ -11,6 +12,7 @@ const Header = () => {
         <img src={CampLogo} alt="Logo website" />
         <span>YourCampSite</span>
       </div>
+      <Navbar />
     </header>
   );
 };

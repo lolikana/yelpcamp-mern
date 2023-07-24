@@ -1,11 +1,11 @@
-@import '@styles/styles.scss';
-
 .header {
   height: 4rem;
   margin: 0 1rem;
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  @include font-responsive(1.25, 2);
 }
 
 .logo {
@@ -21,7 +21,6 @@
   }
 
   span {
-    @include font-responsive(1.5, 2);
     font-weight: $__bold;
   }
 }
