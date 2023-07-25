@@ -58,6 +58,7 @@ export default defineConfig(({ command }) => {
         }
       ]
     },
+    envDir: './../.env',
     css: {
       modules: {
         scopeBehaviour: 'local',
