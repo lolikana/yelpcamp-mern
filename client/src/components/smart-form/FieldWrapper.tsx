@@ -4,8 +4,6 @@ import { IFieldWrapper } from './types';
 
 const FieldWrapper: FC<IFieldWrapper> = props => {
   const { name, error, children } = props;
-  console.log(error);
-
   return (
     <div>
       <div>
