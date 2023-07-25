@@ -27,7 +27,8 @@ module.exports = {
   ],
   rules: {
     'react-refresh/only-export-components': 'warn',
-    indent: [2, 2, { SwitchCase: 1 }],
+    // indent: [2, 2, { SwitchCase: 1 }],
+    indent: 'off',
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single', { allowTemplateLiterals: true, avoidEscape: true }],
     semi: ['error', 'always'],
@@ -52,6 +53,18 @@ module.exports = {
   },
 
   settings: {
+    'import/resolver': {
+      typescript: {
+        project: ['tsconfig.json', 'client/tsconfig.json', 'server/tsconfig.json']
+      },
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      },
+      alias: {
+        extensions: ['.ts', '.tsx'],
+        map: [['@']]
+      }
+    },
     react: {
       version: 'detect'
     }

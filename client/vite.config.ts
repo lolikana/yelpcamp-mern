@@ -41,6 +41,10 @@ export default defineConfig(({ command }) => {
           replacement: path.resolve(__dirname, 'src/pages')
         },
         {
+          find: '@hooks',
+          replacement: path.resolve(__dirname, 'src/hooks')
+        },
+        {
           find: '@assets',
           replacement: path.resolve(__dirname, 'src/assets')
         },
