@@ -1,5 +1,5 @@
 module.exports = {
-  env: { browser: true, es2020: true, node: true },
+  env: { es2020: true, node: true },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -13,7 +13,12 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     tsconfigRootDir: './',
-    project: ['tsconfig.json', 'client/tsconfig.json', 'server/tsconfig.json']
+    project: [
+      'tsconfig.json',
+      'client/tsconfig.json',
+      'client/tsconfig.node.json',
+      'server/tsconfig.json'
+    ]
   },
   root: true,
   plugins: [
