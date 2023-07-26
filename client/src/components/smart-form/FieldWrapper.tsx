@@ -6,7 +6,7 @@ import { IFieldWrapper } from './types';
 const FieldWrapper: FC<IFieldWrapper> = props => {
   const { name, error, children } = props;
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${error ? styles.invalid : ''}`}>
       <label htmlFor={name}>{name}</label>
       {children}
       {error && <p className={styles.container__error}>{error}</p>}

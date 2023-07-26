@@ -16,6 +16,14 @@
       0 0 10px $__main,
       0 0 10px #c2c6c6;
   }
+
+  &.invalid input {
+    box-shadow:
+      0 0 5px red,
+      0 0 10px red,
+      0 0 10px red,
+      0 0 10px #c2c6c6;
+  }
 }
 
 .container__error {
