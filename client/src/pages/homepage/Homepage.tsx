@@ -16,7 +16,10 @@ const Homepage = () => {
           Jump right in and explore our many campgrounds. Feel free to share some of your
           own and comment on others!
         </p>
-        <BtnLink path="/campgrounds" text="Campgrounds" />
+        <div className={styles.homepage__presentation_btns}>
+          <BtnLink path="/login" text="login" color="main" />
+          <BtnLink path="/signup" text="signup" color="primary" />
+        </div>
       </div>
     </section>
   );

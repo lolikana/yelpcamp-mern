@@ -18,3 +18,9 @@
 .homepage__presentation_title {
   font-size: 2rem;
 }
+.homepage__presentation_btns {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0 2rem 0;
+}

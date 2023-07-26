@@ -2,24 +2,16 @@
   position: relative;
   display: inline-block;
   padding: 25px 30px;
-  margin: 40px 0;
   color: $__main;
   text-decoration: none;
   text-transform: uppercase;
   transition: 0.5s;
   letter-spacing: 4px;
   overflow: hidden;
-  margin-right: 50px;
   font-weight: $__bold;
 
   &:hover {
-    background: $__main;
     color: $__sub;
-    box-shadow:
-      0 0 5px $__main,
-      0 0 25px $__main,
-      0 0 50px $__main,
-      0 0 200px #c2c6c6;
     -webkit-box-reflect: below 1px linear-gradient(to bottom, transparent, $__sub);
   }
   &:nth-child(1) {
@@ -36,7 +28,6 @@ a span {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, $__main);
     animation: animate1 2s linear infinite;
   }
   &:nth-child(2) {
@@ -44,7 +35,6 @@ a span {
     right: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(180deg, transparent, $__main);
     animation: animate2 2s linear infinite;
     animation-delay: 0.5s;
   }
@@ -53,7 +43,6 @@ a span {
     right: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(270deg, transparent, $__main);
     animation: animate3 2s linear infinite;
     animation-delay: 1s;
   }
@@ -62,10 +51,53 @@ a span {
     left: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(360deg, transparent, $__main);
     animation: animate4 2s linear infinite;
     animation-delay: 1.5s;
   }
+}
+
+.btn:hover.main {
+  background: $__main;
+  box-shadow:
+    0 0 5px $__main,
+    0 0 25px $__main,
+    0 0 50px $__main,
+    0 0 200px #c2c6c6;
+}
+
+.btn:hover.primary {
+  background: $__primary;
+  box-shadow:
+    0 0 5px $__primary,
+    0 0 25px $__primary,
+    0 0 50px $__primary,
+    0 0 200px #c2c6c6;
+}
+
+.btn.main span:nth-child(1) {
+  background: linear-gradient(90deg, transparent, $__main);
+}
+.btn.main span:nth-child(2) {
+  background: linear-gradient(180deg, transparent, $__main);
+}
+.btn.main span:nth-child(3) {
+  background: linear-gradient(270deg, transparent, $__main);
+}
+.btn.main span:nth-child(4) {
+  background: linear-gradient(360deg, transparent, $__main);
+}
+
+.btn.primary span:nth-child(1) {
+  background: linear-gradient(90deg, transparent, $__primary);
+}
+.btn.primary span:nth-child(2) {
+  background: linear-gradient(180deg, transparent, $__primary);
+}
+.btn.primary span:nth-child(3) {
+  background: linear-gradient(270deg, transparent, $__primary);
+}
+.btn.primary span:nth-child(4) {
+  background: linear-gradient(360deg, transparent, $__primary);
 }
 
 @keyframes animate1 {
