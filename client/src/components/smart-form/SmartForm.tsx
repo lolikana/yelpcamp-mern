@@ -3,6 +3,8 @@ import { createElement, isValidElement, ReactElement, useEffect } from 'react';
 import { FieldValues, Path, useForm, UseFormProps } from 'react-hook-form';
 import { Schema, ZodTypeDef } from 'zod';
 
+import styles from './SmartForm.module.scss';
+
 type TSmartForm<TFormValues extends FieldValues> = {
   cancelLink: string;
   onSubmit: (data: TFormValues) => void;
@@ -36,7 +38,11 @@ const SmartForm = <
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)} noValidate>
+    <form
+      className={styles.form}
+      onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}
+      noValidate
+    >
       {Array.isArray(children)
         ? children.map(child => {
             if (isValidElement(child) && child.props.name) {
