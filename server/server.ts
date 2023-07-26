@@ -1,11 +1,11 @@
 import bodyParser from 'body-parser';
-import express from 'express';
+import express, { ErrorRequestHandler } from 'express';
 
 import { mongoConnection } from './configs';
 import { router as usersRoutes } from './routes/users-routes';
 import { ExpressError } from './utils';
 
-const port = process.env.PORT || 3001;
+const port = process.env.VITE_PORT || 3001;
 const app = express();
 
 app.use(bodyParser.json());
@@ -26,6 +26,14 @@ app.use(usersRoutes);
 app.all('*', (_req, _res, next) => {
   next(new ExpressError('Page Not Found!!', 404));
 });
+app.use(((err, _req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+  const error = err as { code: number; message: string };
+  res.status(error.code || 500);
+  res.json({ message: error.message || 'An unknown error occurred!' });
+}) as ErrorRequestHandler);
 
 mongoConnection()
   .then(() => {

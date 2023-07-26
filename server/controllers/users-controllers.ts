@@ -87,7 +87,12 @@ export default {
         token
       });
     } catch (err) {
-      return next(err);
+      if (err instanceof Error) {
+        const error = new ExpressError(err.message, 500);
+        return next(error);
+      }
+      const error = new ExpressError(err as string, 500);
+      return next(error);
     }
   }) as RequestHandler
 };
