@@ -1,0 +1,24 @@
+.button {
+  padding: 0.5rem 1rem;
+  border-radius: 7px;
+  font-weight: $__bold;
+  transition: all 250ms ease;
+}
+
+.button.submit {
+  color: $__sub;
+  background: $__main;
+  box-shadow:
+    0 0 1px $__main,
+    0 0 5px $__main,
+    0 0 5px $__main,
+    0 0 2px #c2c6c6;
+}
+
+.button.submit:hover {
+  box-shadow:
+    0 0 1px $__main,
+    0 0 10px $__main,
+    0 0 10px $__main,
+    0 0 5px #c2c6c6;
+}
