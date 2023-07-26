@@ -1,19 +1,14 @@
 import { Layout } from '@components/layout';
 import { Input, SmartForm } from '@components/smart-form';
 import Button from '@components/ui/buttons/Button';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useHttpClient } from './../../hooks/use-http';
 import useTitle from './../../hooks/use-title';
 import { LoginValidation } from './../../libs/validations';
 import styles from './Login.module.scss';
-import { ILogin } from './type';
-
-export type TLogin = {
-  email: string;
-  password: string;
-};
+import { TLogin } from './type';
 
 const defaultValues = {
   email: 'postman1@postman.com',
@@ -23,9 +18,18 @@ const defaultValues = {
 const Login = () => {
   const headTitleRef = useRef<string>('Login');
   useTitle(headTitleRef.current);
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const onSubmit = async (data: ILogin) => {
+  useEffect(() => {
+    const errorText = document.getElementById('login-error');
+    window.addEventListener('click', (e: Event) => {
+      const target = e.target;
+      if (target === errorText) return;
+      clearError();
+    });
+  }, [error]);
+
+  const onSubmit = async (data: TLogin) => {
     try {
       const { email, password } = data;
       const url = `${import.meta.env.VITE_PATH}${import.meta.env.VITE_PORT}/login`;
@@ -47,7 +51,7 @@ const Login = () => {
   return (
     <Layout>
       <section className={styles.login}>
-        {error && <p>{error}</p>}
+        {error && <p id="login-error">{error}</p>}
         {isLoading && <h1>LOADING</h1>}
         <SmartForm<TLogin>
           validationSchema={LoginValidation}

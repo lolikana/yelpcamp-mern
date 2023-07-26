@@ -33,7 +33,8 @@ const SmartForm = <
   } = methods;
 
   useEffect(() => {
-    if (!isSubmitSuccessful) return;
+    if (errors || !isSubmitSuccessful) return;
+
     reset();
   }, [isSubmitSuccessful, reset]);
 

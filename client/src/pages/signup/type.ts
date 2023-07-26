@@ -1,6 +1,6 @@
-export interface ISignup {
+export type TSignup = {
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
-}
+};

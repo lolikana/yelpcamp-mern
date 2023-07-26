@@ -1,19 +1,14 @@
 import { Layout } from '@components/layout';
 import { Input, SmartForm } from '@components/smart-form';
 import Button from '@components/ui/buttons/Button';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useHttpClient } from './../../hooks/use-http';
 import useTitle from './../../hooks/use-title';
 import { SignupValidation } from './../../libs/validations';
 import styles from './../login/Login.module.scss';
-import { ISignup } from './type';
-
-export type TLogin = {
-  email: string;
-  password: string;
-};
+import { TSignup } from './type';
 
 const defaultValues = {
   username: 'postman1',
@@ -25,9 +20,18 @@ const defaultValues = {
 const Signup = () => {
   const headTitleRef = useRef<string>('Signup');
   useTitle(headTitleRef.current);
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const onSubmit = async (data: ISignup) => {
+  useEffect(() => {
+    const errorText = document.getElementById('signup-error');
+    window.addEventListener('click', (e: Event) => {
+      const target = e.target;
+      if (target === errorText) return;
+      clearError();
+    });
+  }, [error]);
+
+  const onSubmit = async (data: TSignup) => {
     try {
       const { username, email, password, confirmPassword } = data;
       const url = `${import.meta.env.VITE_PATH}${import.meta.env.VITE_PORT}/signup`;
@@ -41,7 +45,7 @@ const Signup = () => {
         password: password,
         confirmPassword: confirmPassword
       });
-      const res = (await sendRequest(url, method, headers, body)) as Promise<ISignup>;
+      const res = (await sendRequest(url, method, headers, body)) as Promise<TSignup>;
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -51,9 +55,9 @@ const Signup = () => {
   return (
     <Layout>
       <section className={styles.login}>
-        {error && <p>{error}</p>}
+        {error && <p id="signup-error">{error}</p>}
         {isLoading && <h1>LOADING</h1>}
-        <SmartForm<TLogin>
+        <SmartForm<TSignup>
           validationSchema={SignupValidation}
           onSubmit={onSubmit}
           options={{ defaultValues }}
