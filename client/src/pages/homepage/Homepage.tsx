@@ -1,10 +1,12 @@
 import BtnLink from '@components/ui/buttons/BtnLink';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 
+import { AuthContext } from './../../context/auth-context';
 import useTitle from './../../hooks/use-title';
 import styles from './Homepage.module.scss';
 
 const Homepage = () => {
+  const auth = useContext(AuthContext);
   const headTitleRef = useRef<string>('HOMEPAGE');
   useTitle(headTitleRef.current);
 
@@ -17,8 +19,14 @@ const Homepage = () => {
           own and comment on others!
         </p>
         <div className={styles.homepage__presentation_btns}>
-          <BtnLink path="/login" text="login" color="main" />
-          <BtnLink path="/signup" text="signup" color="primary" />
+          {auth.token ? (
+            <BtnLink path="/campgrounds" text="Campgrounds" color="primary" />
+          ) : (
+            <>
+              <BtnLink path="/login" text="login" color="main" />
+              <BtnLink path="/signup" text="signup" color="primary" />
+            </>
+          )}
         </div>
       </div>
     </section>

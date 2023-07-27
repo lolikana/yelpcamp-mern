@@ -1,13 +1,14 @@
 import { Input, SmartForm } from '@components/smart-form';
 import Button from '@components/ui/buttons/Button';
-import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
+import { AuthContext } from './../../context/auth-context';
 import { useHttpClient } from './../../hooks/use-http';
 import useTitle from './../../hooks/use-title';
 import { LoginValidation } from './../../libs/validations';
 import styles from './Login.module.scss';
-import { TLogin } from './type';
+import { TLogin, TLoginResponse } from './type';
 
 const defaultValues = {
   email: 'postman1@postman.com',
@@ -15,6 +16,8 @@ const defaultValues = {
 };
 
 const Login = () => {
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   const headTitleRef = useRef<string>('Login');
   useTitle(headTitleRef.current);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -40,8 +43,10 @@ const Login = () => {
         email: email,
         password: password
       });
-      const res = (await sendRequest(url, method, headers, body)) as Promise<TLogin>;
-      console.log(res);
+      const res = (await sendRequest(url, method, headers, body)) as TLoginResponse;
+
+      auth.login(res.userId, res.token);
+      navigate('/');
     } catch (err) {
       console.log(err);
     }
