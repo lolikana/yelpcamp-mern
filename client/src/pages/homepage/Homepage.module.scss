@@ -10,9 +10,8 @@
   color: $__main;
   width: 80%;
   max-width: 600px;
-  padding: 1rem;
+  padding: 4rem 1rem;
   text-align: center;
-  backdrop-filter: blur(8px);
 }
 
 .homepage__presentation_title {
@@ -22,5 +21,5 @@
   display: flex;
   justify-content: center;
   gap: 2rem;
-  margin: 1rem 0 2rem 0;
+  margin: 2rem 0 0;
 }

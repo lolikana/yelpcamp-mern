@@ -10,7 +10,7 @@ const Homepage = () => {
 
   return (
     <section className={styles.homepage}>
-      <div className={styles.homepage__presentation}>
+      <div className={`${styles.homepage__presentation} frame`}>
         <h1 className={styles.homepage__presentation_title}>Welcome to Yelpcamp!</h1>
         <p>
           Jump right in and explore our many campgrounds. Feel free to share some of your

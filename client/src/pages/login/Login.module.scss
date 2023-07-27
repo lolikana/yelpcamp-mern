@@ -2,6 +2,14 @@
   height: 100%;
   @extend %flex-center;
   flex-direction: column;
+  background-image: url('src/assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+
+  form {
+    height: fit-content;
+    padding: 2rem 4rem;
+  }
 }
 
 .login__account {

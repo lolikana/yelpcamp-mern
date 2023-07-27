@@ -93,6 +93,20 @@ $__breakpoints: (
   box-shadow: $__inset $__horizontaloffset $__verticaloffset $blur $__spread $__color;
 }
 
+@mixin custom-box-shadow(
+  $__horizontaloffset: 0 0 5px,
+  $__verticaloffset: 0 0 10px,
+  $blur: 0 0 10px,
+  $__spread: 0 0 10px,
+  $__color: #000000
+) {
+  box-shadow:
+    $__horizontaloffset $__color,
+    $__verticaloffset $__color,
+    $blur $__color,
+    $__spread #c2c6c6;
+}
+
 /** Extends **/
 %flex-center {
   display: flex;

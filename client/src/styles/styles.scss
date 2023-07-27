@@ -53,3 +53,9 @@ main {
 main section:first-child {
   padding-top: 4rem;
 }
+
+.frame {
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  @include custom-box-shadow($__color: $__main_opacity);
+}

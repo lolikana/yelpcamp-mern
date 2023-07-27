@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   label {
     font-size: 1.5rem;
   }
@@ -10,19 +11,12 @@
     border-radius: 2px;
     color: $__sub;
     background: $__main;
-    box-shadow:
-      0 0 5px $__main,
-      0 0 10px $__main,
-      0 0 10px $__main,
-      0 0 10px #c2c6c6;
+
+    @include custom-box-shadow($__color: $__main);
   }
 
   &.invalid input {
-    box-shadow:
-      0 0 5px red,
-      0 0 10px red,
-      0 0 10px red,
-      0 0 10px #c2c6c6;
+    @include custom-box-shadow($__color: $__error);
   }
 }
 
@@ -31,5 +25,5 @@
   color: $__error;
   margin-top: 0.75rem;
   line-height: 0.9rem;
-  text-shadow: 1px 1px 20px $__main;
+  text-shadow: 0 0 10px $__sub;
 }

@@ -51,21 +51,23 @@ const Login = () => {
   return (
     <Layout>
       <section className={styles.login}>
-        {error && <p id="login-error">{error}</p>}
-        {isLoading && <h1>LOADING</h1>}
-        <SmartForm<TLogin>
-          validationSchema={LoginValidation}
-          onSubmit={onSubmit}
-          options={{ defaultValues }}
-          cancelLink="/login"
-        >
-          <Input name="email" type="email" />
-          <Input name="password" type="password" />
-          <Button type="submit" text="Submit" style="submit" />
-          <div className={styles.login__account}>
-            Don’t have an account yet? <Link to="/signup">Sign up</Link>
-          </div>
-        </SmartForm>
+        <div className="frame">
+          {error && <p id="login-error">{error}</p>}
+          {isLoading && <h1>LOADING</h1>}
+          <SmartForm<TLogin>
+            validationSchema={LoginValidation}
+            onSubmit={onSubmit}
+            options={{ defaultValues }}
+            cancelLink="/login"
+          >
+            <Input name="email" type="email" />
+            <Input name="password" type="password" />
+            <Button type="submit" text="Submit" style="submit" />
+            <div className={styles.login__account}>
+              Don’t have an account yet? <Link to="/signup">Sign up</Link>
+            </div>
+          </SmartForm>
+        </div>
       </section>
     </Layout>
   );
