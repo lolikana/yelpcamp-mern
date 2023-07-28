@@ -31,3 +31,10 @@ export const SignupValidation = z
     path: ['confirmPassword'],
     message: 'Password do not match'
   });
+
+export const CampgroundValidation = z.object({
+  title: z.string().min(1, { message: 'Enter a title' }),
+  location: z.string().min(1, { message: 'Enter a location' }),
+  description: z.string().min(1, { message: 'Enter a description' }),
+  price: z.string().min(1, { message: 'Enter a price' })
+});

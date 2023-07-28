@@ -12,3 +12,5 @@ export interface IInput {
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
 }
+
+export interface ITextArea extends Omit<IInput, 'type'> {}

@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
-import { IUser } from './../libs/types';
-import { User } from './../models';
+// import { IUser } from './../libs/types';
+// import { User } from './../models';
 import { CampgroundModel } from './../models/campground-model';
 import { ExpressError } from './../utils';
 
@@ -21,11 +21,10 @@ export default {
           filename: 'image_02'
         }
       ];
-      campground.author = (await User.findOne({
-        id: req.userData.userId as string
-      })) as IUser;
       await campground.save();
-      res.redirect(`/campgrounds/${campground.id}`);
+      res.json({
+        campgroundId: campground.id as string
+      });
     } catch (err) {
       const error = new ExpressError(
         'Could not create a campground, please try again',

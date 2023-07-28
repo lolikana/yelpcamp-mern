@@ -15,6 +15,9 @@ const NavMenu: FC<{ isHidden: boolean }> = ({ isHidden }) => {
           <li className={styles.menu__item}>
             <Link to="/campgrounds">Campgrounds</Link>
           </li>
+          <li className={styles.menu__item}>
+            <Link to="/campgrounds/new-campground">Add</Link>
+          </li>
           <li>
             <NormalButton text="Logout" style="cancel" onClick={auth.logout} />
           </li>
