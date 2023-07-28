@@ -1,0 +1,14 @@
+.button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  transition: 200ms all ease;
+}
+
+.button.cancel {
+  background-color: rgba(193, 2, 2, 0.8);
+  @include custom-box-shadow($__color: rgba(193, 2, 2, 1));
+
+  &:hover {
+    background-color: rgba(193, 2, 2, 1);
+  }
+}
