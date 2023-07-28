@@ -52,7 +52,7 @@ const Signup = () => {
   };
 
   return (
-    <section className={styles.login}>
+    <section className={`${styles.login} form-section`}>
       <div className="frame">
         {error && <p id="signup-error">{error}</p>}
         {isLoading && <h1>LOADING</h1>}

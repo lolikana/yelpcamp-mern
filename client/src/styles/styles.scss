@@ -54,8 +54,37 @@ main section:first-child {
   padding-top: 4rem;
 }
 
+.form-section {
+  height: 100%;
+  @extend %flex-center;
+  flex-direction: column;
+  background-image: url('src/assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+
+  form {
+    height: fit-content;
+    padding: 1rem;
+
+    @include mq('custom600') {
+      padding: 2rem 4rem;
+    }
+  }
+
+  form,
+  input {
+    width: 100%;
+  }
+}
+
 .frame {
   backdrop-filter: blur(8px);
   border-radius: 10px;
   @include custom-box-shadow($__color: $__main_opacity);
+  width: 95%;
+
+  @include mq('custom600') {
+    width: 70%;
+    max-width: 400px;
+  }
 }
