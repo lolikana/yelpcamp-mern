@@ -1,4 +1,4 @@
-import BtnLink from '@components/ui/buttons/BtnLink';
+import ReflectLink from '@components/ui/buttons/ReflectLink';
 import { useContext, useRef } from 'react';
 
 import { AuthContext } from './../../context/auth-context';
@@ -20,11 +20,11 @@ const Homepage = () => {
         </p>
         <div className={styles.homepage__presentation_btns}>
           {auth.token ? (
-            <BtnLink path="/campgrounds" text="Campgrounds" color="primary" />
+            <ReflectLink path="/campgrounds" text="Campgrounds" color="primary" />
           ) : (
             <>
-              <BtnLink path="/login" text="login" color="main" />
-              <BtnLink path="/signup" text="signup" color="primary" />
+              <ReflectLink path="/login" text="login" color="main" />
+              <ReflectLink path="/signup" text="signup" color="primary" />
             </>
           )}
         </div>

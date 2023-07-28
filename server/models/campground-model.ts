@@ -23,6 +23,10 @@ const CampgroundSchema = new Schema<ICampground>({
     required: true,
     type: String
   },
+  description: {
+    required: true,
+    type: String
+  },
   geometry: {
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true }

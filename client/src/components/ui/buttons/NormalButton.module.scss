@@ -12,3 +12,12 @@
     background-color: rgba(193, 2, 2, 1);
   }
 }
+
+.button.blue {
+  background-color: rgba(2, 21, 193, 0.8);
+  @include custom-box-shadow($__color: rgba(2, 21, 193, 1));
+
+  &:hover {
+    background-color: rgba(2, 21, 193, 1);
+  }
+}

@@ -54,13 +54,27 @@ main section:first-child {
   padding-top: 4rem;
 }
 
+main article:first-child {
+  padding-top: 6rem;
+}
+
+.page-article,
+.form-section {
+  background-image: url('src/assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.page-article {
+  padding: 1rem;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .form-section {
   height: 100%;
   @extend %flex-center;
   flex-direction: column;
-  background-image: url('src/assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
-  background-size: cover;
-  background-position: 50% 50%;
 
   form {
     height: fit-content;

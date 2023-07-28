@@ -7,4 +7,4 @@ export const router = Router();
 
 router.use(isLoggedIn);
 
-router.route('/').post(campgrounds.create);
+router.route('/').get(campgrounds.readAll).post(campgrounds.create);

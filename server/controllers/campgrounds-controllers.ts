@@ -36,7 +36,7 @@ export default {
   readAll: (async (req, res, next) => {
     try {
       const campgrounds = await CampgroundModel.find({
-        $in: { author: req.userData.userId as string }
+        author: req.userData.userId as string
       });
 
       res.json(campgrounds);

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './BtnLink.module.scss';
+import styles from './ReflectLink.module.scss';
 
 type Props = {
   path: string;
@@ -9,7 +9,7 @@ type Props = {
   color: string;
 };
 
-const BtnLink: FC<Props> = props => {
+const ReflectLink: FC<Props> = props => {
   const { path, text, color } = props;
   return (
     <Link to={path} className={`${styles.btn} ${styles[color]}`}>
@@ -22,4 +22,4 @@ const BtnLink: FC<Props> = props => {
   );
 };
 
-export default BtnLink;
+export default ReflectLink;
