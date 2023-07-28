@@ -44,7 +44,7 @@ const Signup = () => {
         password: password,
         confirmPassword: confirmPassword
       });
-      const res = (await sendRequest(url, method, headers, body)) as Promise<TSignup>;
+      const res = (await sendRequest({ url, method, headers, body })) as Promise<TSignup>;
       console.log(res);
     } catch (err) {
       console.log(err);

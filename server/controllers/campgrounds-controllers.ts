@@ -8,7 +8,6 @@ import { ExpressError } from './../utils';
 export default {
   create: (async (req, res, next) => {
     try {
-      console.log(req.body);
       const campground = new CampgroundModel(req.body);
       campground.geometry = { type: 'Point', coordinates: [100, 100] };
       campground.images = [
@@ -28,6 +27,22 @@ export default {
     } catch (err) {
       const error = new ExpressError(
         'Could not create a campground, please try again',
+        500
+      );
+      next(error);
+    }
+  }) as RequestHandler,
+
+  readAll: (async (req, res, next) => {
+    try {
+      const campgrounds = await CampgroundModel.find({
+        $in: { author: req.userData.userId as string }
+      });
+
+      res.json(campgrounds);
+    } catch (err) {
+      const error = new ExpressError(
+        'Something went wrong whent fetching the campgrounds',
         500
       );
       next(error);

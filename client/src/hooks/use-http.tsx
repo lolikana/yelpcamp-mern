@@ -2,6 +2,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+interface ISendRequest {
+  url: string;
+  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
+  headers?: Record<string, string>;
+  body?: BodyInit | null | undefined;
+}
+
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -9,12 +16,7 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef<AbortController[]>([]);
 
   const sendRequest = useCallback(
-    async (
-      url: string,
-      method = 'GET',
-      headers = {},
-      body: BodyInit | null | undefined
-    ) => {
+    async ({ url = '', method = 'GET', headers = {}, body = null }: ISendRequest) => {
       setIsLoading(true);
       const httpAbortController = new AbortController();
       try {

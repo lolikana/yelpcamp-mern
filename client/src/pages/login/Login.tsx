@@ -43,7 +43,7 @@ const Login = () => {
         email: email,
         password: password
       });
-      const res = (await sendRequest(url, method, headers, body)) as TLoginResponse;
+      const res = (await sendRequest({ url, method, headers, body })) as TLoginResponse;
 
       auth.login(res.userId, res.token);
       navigate('/');

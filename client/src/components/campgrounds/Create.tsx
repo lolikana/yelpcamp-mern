@@ -21,7 +21,7 @@ const Create = () => {
         'Content-Type': 'application/json'
       };
       const body = JSON.stringify({ ...data, author: auth.uid as string });
-      const res = (await sendRequest(url, method, headers, body)) as {
+      const res = (await sendRequest({ url, method, headers, body })) as {
         compgroundId: string;
       };
       navigate(`/${res.compgroundId}`);
