@@ -18,7 +18,8 @@ const Create = () => {
       const url = `${import.meta.env.VITE_PATH}${import.meta.env.VITE_PORT}/campgrounds`;
       const method = 'POST';
       const headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth.token}`
       };
       const body = JSON.stringify({ ...data, author: auth.uid as string });
       const res = (await sendRequest(url, method, headers, body)) as {

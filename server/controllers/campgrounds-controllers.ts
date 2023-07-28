@@ -8,7 +8,6 @@ import { ExpressError } from './../utils';
 export default {
   create: (async (req, res, next) => {
     try {
-      console.log(req.body);
       const campground = new CampgroundModel(req.body);
       campground.geometry = { type: 'Point', coordinates: [100, 100] };
       campground.images = [
