@@ -5,10 +5,12 @@ type AuthContextType = {
   uid: string | null;
   token: string | null;
   login: (uid: string, token: string) => void;
+  logout: () => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
   uid: null,
   token: null,
-  login: () => {}
+  login: () => {},
+  logout: () => {}
 });
