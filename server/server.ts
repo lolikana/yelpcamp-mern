@@ -2,6 +2,7 @@ import bodyParser from 'body-parser';
 import express, { ErrorRequestHandler } from 'express';
 
 import { mongoConnection } from './configs';
+import { router as campgroundsRoutes } from './routes/campgrounds-routes';
 import { router as usersRoutes } from './routes/users-routes';
 import { ExpressError } from './utils';
 
@@ -22,6 +23,7 @@ app.use((_req, res, next) => {
 });
 
 app.use(usersRoutes);
+app.use('/campgrounds', campgroundsRoutes);
 
 app.all('*', (_req, _res, next) => {
   next(new ExpressError('Page Not Found!!', 404));
