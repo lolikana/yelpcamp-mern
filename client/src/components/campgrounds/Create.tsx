@@ -23,9 +23,9 @@ const Create = () => {
       };
       const body = JSON.stringify({ ...data, author: auth.uid as string });
       const res = (await sendRequest({ url, method, headers, body })) as {
-        compgroundId: string;
+        campgroundId: string;
       };
-      navigate(`/${res.compgroundId}`);
+      navigate(`/campgrounds/${res.campgroundId}`);
     } catch (err) {
       console.log(err);
     }

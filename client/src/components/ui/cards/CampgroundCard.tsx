@@ -6,10 +6,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { TResponseCampground } from '../../campgrounds/types';
 import ButtonLink from '../buttons/ButtonLink';
+import NormalButton from '../buttons/NormalButton';
 import LocationIcon from '../icons/LocationIcon';
 import styles from './CampgroundCard.module.scss';
 
-const CampgroundCard = (props: { campground: TResponseCampground | null }) => {
+interface Props {
+  campground: TResponseCampground | null;
+  onDelete: () => void;
+}
+
+const CampgroundCard = (props: Props) => {
   if (props.campground === null) return <p>No campground found</p>;
 
   const { title, images, location, description, price } = props.campground;
@@ -42,6 +48,10 @@ const CampgroundCard = (props: { campground: TResponseCampground | null }) => {
           <p>{description}</p>
         </div>
         <div className={styles.card__buttons}>
+          <div>
+            <ButtonLink path={`/campgrounds`} text="Edit" style="blue" />
+            <NormalButton text="Delete" style="cancel" onClick={props.onDelete} />
+          </div>
           <ButtonLink path={`/campgrounds`} text="Back to list" style="orange" />
         </div>
       </div>

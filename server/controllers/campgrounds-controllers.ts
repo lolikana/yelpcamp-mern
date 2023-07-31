@@ -56,9 +56,25 @@ export default {
         author: req.userData.userId as string,
         _id: campgroundId
       });
-      console.log(campground);
 
       res.json(campground);
+    } catch (err) {
+      const error = new ExpressError(
+        'Something went wrong whent fetching the campground',
+        500
+      );
+      next(error);
+    }
+  }) as RequestHandler,
+
+  delete: (async (req, res, next) => {
+    try {
+      const { campgroundId } = req.params;
+      await CampgroundModel.findOneAndDelete({
+        author: req.userData.userId as string,
+        _id: campgroundId
+      });
+      res.status(200).json({ message: 'Deleted campground.' });
     } catch (err) {
       const error = new ExpressError(
         'Something went wrong whent fetching the campgrounds',
