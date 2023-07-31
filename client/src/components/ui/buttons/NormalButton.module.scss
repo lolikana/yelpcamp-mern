@@ -21,3 +21,12 @@
     background-color: rgba(2, 21, 193, 1);
   }
 }
+
+.button.orange {
+  background-color: rgba(193, 110, 2, 0.8);
+  @include custom-box-shadow($__color: rgba(193, 110, 2, 1));
+
+  &:hover {
+    background-color: rgba(193, 110, 2, 1);
+  }
+}

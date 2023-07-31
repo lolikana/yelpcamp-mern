@@ -47,5 +47,24 @@ export default {
       );
       next(error);
     }
+  }) as RequestHandler,
+
+  readOne: (async (req, res, next) => {
+    try {
+      const { campgroundId } = req.params;
+      const campground = await CampgroundModel.findOne({
+        author: req.userData.userId as string,
+        _id: campgroundId
+      });
+      console.log(campground);
+
+      res.json(campground);
+    } catch (err) {
+      const error = new ExpressError(
+        'Something went wrong whent fetching the campgrounds',
+        500
+      );
+      next(error);
+    }
   }) as RequestHandler
 };

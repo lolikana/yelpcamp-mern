@@ -29,7 +29,7 @@ const CampgroundsCard = (props: { campground: TResponseCampground }) => {
           <p>{description}</p>
         </div>
         <div>
-          <ButtonLink path={`/${_id}`} text="View more" style="blue" />
+          <ButtonLink path={`/campgrounds/${_id}`} text="View more" style="blue" />
         </div>
       </div>
     </div>
