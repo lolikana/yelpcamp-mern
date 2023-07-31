@@ -8,11 +8,13 @@
   position: absolute;
   top: 4rem;
   font-size: 2rem;
+  visibility: hidden;
   transition: all 500ms ease;
   @include box-shadow(inset, 0px, 10px, 10px, -10px, rgba(255, 255, 255, 1));
 }
 
 .menu[aria-hidden='false'] {
+  visibility: visible;
   height: calc(100vh - 4rem);
   opacity: 1;
   backdrop-filter: blur(8px);
