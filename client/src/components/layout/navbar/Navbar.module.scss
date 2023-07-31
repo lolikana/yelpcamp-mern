@@ -5,9 +5,4 @@
   height: 4rem;
   color: $__main;
   @extend %flex-center;
-
-  @include mq('custom600') {
-    width: 50%;
-    right: 0;
-  }
 }

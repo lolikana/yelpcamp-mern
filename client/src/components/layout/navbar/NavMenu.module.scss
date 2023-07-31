@@ -43,6 +43,7 @@
 
 @include mq('custom600') {
   .menu {
+    visibility: visible;
     position: relative;
     opacity: 1;
 
