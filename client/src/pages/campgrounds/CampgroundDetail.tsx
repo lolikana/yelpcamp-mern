@@ -32,7 +32,9 @@ const CampgroundDetail = () => {
 
   const deleteHandler = async () => {
     try {
-      const url = `http://localhost:3001/campgrounds/${campgroundId}`;
+      const url = `${import.meta.env.VITE_PATH}${
+        import.meta.env.VITE_PORT
+      }/campgrounds/${campgroundId}`;
       const method = 'DELETE';
       const headers = {
         Authorization: `Bearer ${auth.token}`

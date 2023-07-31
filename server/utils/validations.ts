@@ -61,3 +61,10 @@ export const loginSchema = z
 
     return Promise.resolve(true);
   });
+
+export const campgroundSchema = z.object({
+  title: z.string().min(1, { message: 'A title is required' }),
+  location: z.string().min(1, { message: 'A title is required' }),
+  description: z.string().min(1, { message: 'A title is required' }),
+  price: z.string().min(1, { message: 'A title is required' })
+});

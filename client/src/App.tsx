@@ -2,6 +2,7 @@ import '@styles/styles.scss';
 
 import { Campgrounds, CreateCampground } from '@pages/campgrounds';
 import CampgroundDetail from '@pages/campgrounds/CampgroundDetail';
+import UpdateCampground from '@pages/campgrounds/UpdateCampground';
 import Homepage from '@pages/homepage/Homepage';
 import Login from '@pages/login/Login';
 import RootLayout from '@pages/root-layout/RootLayout';
@@ -49,6 +50,7 @@ function App() {
           { path: '/campgrounds', element: <Campgrounds /> },
           { path: '/campgrounds/new-campground', element: <CreateCampground /> },
           { path: '/campgrounds/:campgroundId', element: <CampgroundDetail /> },
+          { path: '/campgrounds/:campgroundId/update', element: <UpdateCampground /> },
           { path: '*', element: <Navigate to="/" /> }
         ]
       }

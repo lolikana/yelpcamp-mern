@@ -9,4 +9,8 @@ router.use(isLoggedIn);
 
 router.route('/').get(campgrounds.readAll).post(campgrounds.create);
 
-router.route('/:campgroundId').get(campgrounds.readOne).delete(campgrounds.delete);
+router
+  .route('/:campgroundId')
+  .get(campgrounds.readOne)
+  .patch(campgrounds.update)
+  .delete(campgrounds.delete);

@@ -1,13 +1,18 @@
 import { RequestHandler } from 'express';
 
-// import { IUser } from './../libs/types';
-// import { User } from './../models';
 import { CampgroundModel } from './../models/campground-model';
 import { ExpressError } from './../utils';
+import { campgroundSchema } from './../utils/validations';
 
 export default {
   create: (async (req, res, next) => {
     try {
+      const result = campgroundSchema.safeParse(req.body);
+      if (!result.success) {
+        const error = new ExpressError(result.error.issues[0].message, 422);
+        return next(error);
+      }
+
       const campground = new CampgroundModel(req.body);
       campground.geometry = { type: 'Point', coordinates: [100, 100] };
       campground.images = [
@@ -23,6 +28,35 @@ export default {
       await campground.save();
       res.json({
         campgroundId: campground.id as string
+      });
+    } catch (err) {
+      const error = new ExpressError(
+        'Could not create a campground, please try again',
+        500
+      );
+      next(error);
+    }
+  }) as RequestHandler,
+
+  update: (async (req, res, next) => {
+    try {
+      const { campgroundId } = req.params;
+      const result = campgroundSchema.safeParse(req.body);
+      if (!result.success) {
+        const error = new ExpressError(result.error.issues[0].message, 422);
+        return next(error);
+      }
+
+      await CampgroundModel.findOneAndUpdate(
+        {
+          author: req.userData.userId as string,
+          _id: campgroundId
+        },
+        { ...result.data },
+        { new: true }
+      );
+      res.json({
+        campgroundId: campgroundId
       });
     } catch (err) {
       const error = new ExpressError(
@@ -56,7 +90,6 @@ export default {
         author: req.userData.userId as string,
         _id: campgroundId
       });
-
       res.json(campground);
     } catch (err) {
       const error = new ExpressError(
