@@ -102,3 +102,10 @@ main article:first-child {
     max-width: 400px;
   }
 }
+
+.suspense {
+  color: $__main;
+  height: 100%;
+
+  @extend %flex-center;
+}

@@ -1,56 +1,74 @@
 import CampgroundCard from '@components/ui/cards/CampgroundCard';
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Suspense } from 'react';
+import {
+  Await,
+  defer,
+  json,
+  redirect,
+  useRouteLoaderData,
+  useSubmit
+} from 'react-router-dom';
 
 import { TResponseCampground } from './../../components/campgrounds/types';
-import { AuthContext } from './../../context/auth-context';
-import { useHttpClient } from './../../hooks/use-http';
 import styles from './CampgroundDetail.module.scss';
 
 const CampgroundDetail = () => {
-  const navigate = useNavigate();
-  const auth = useContext(AuthContext);
-  const campgroundId = useParams().campgroundId;
-  const [campground, setCampground] = useState<TResponseCampground | null>(null);
-  const { sendRequest } = useHttpClient();
-
-  useEffect(() => {
-    const fetchCampground = async () => {
-      try {
-        const url = `${import.meta.env.VITE_PATH}${
-          import.meta.env.VITE_PORT
-        }/campgrounds/${campgroundId}`;
-        const headers = { Authorization: `Bearer ${auth.token}` };
-        const res = (await sendRequest({ url, headers })) as TResponseCampground;
-        setCampground(res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchCampground().catch(err => console.log(err));
-  }, []);
-
-  const deleteHandler = async () => {
-    try {
-      const url = `${import.meta.env.VITE_PATH}${
-        import.meta.env.VITE_PORT
-      }/campgrounds/${campgroundId}`;
-      const method = 'DELETE';
-      const headers = {
-        Authorization: `Bearer ${auth.token}`
-      };
-      await sendRequest({ url, method, headers });
-      navigate('/campgrounds');
-    } catch (err) {
-      console.log(err);
-    }
+  const submit = useSubmit();
+  const { campground } = useRouteLoaderData('campground-detail') as {
+    campground: TResponseCampground;
   };
 
   return (
-    <article className={`${styles.container} page-article`}>
-      <CampgroundCard campground={campground} onDelete={deleteHandler} />
-    </article>
+    <Suspense fallback={<p className="suspense">Loading campground...</p>}>
+      <Await resolve={campground}>
+        {(loadedCampground: TResponseCampground) => (
+          <article className={`${styles.container} page-article`}>
+            <CampgroundCard
+              campground={loadedCampground}
+              onDelete={() => submit(null, { method: 'delete' })}
+            />
+          </article>
+        )}
+      </Await>
+    </Suspense>
   );
 };
 
 export default CampgroundDetail;
+
+const loadCampground = async (
+  id: string,
+  token: string
+): Promise<TResponseCampground> => {
+  const url = `${import.meta.env.VITE_PATH}${
+    import.meta.env.VITE_PORT
+  }/campgrounds/${id}`;
+  const headers = { Authorization: `Bearer ${token}` };
+  const res = await fetch(url, { headers });
+  if (!res.ok) {
+    throw json({ message: 'Could not fetch campgrounds' }, { status: 500 });
+  } else {
+    return (await res.json()) as TResponseCampground;
+  }
+};
+
+export const loader = (id: string, token: string): { data: Record<string, unknown> } => {
+  return defer({
+    campground: loadCampground(id, token)
+  });
+};
+
+export const action = async (id: string, token: string): Promise<Response> => {
+  const url = `${import.meta.env.VITE_PATH}${
+    import.meta.env.VITE_PORT
+  }/campgrounds/${id}`;
+  const method = 'DELETE';
+  const headers = {
+    Authorization: `Bearer ${token}`
+  };
+  const res = await fetch(url, { method, headers });
+  if (!res.ok) {
+    throw json({ message: 'Could not delete event' }, { status: 500 });
+  }
+  return redirect('/campgrounds');
+};
