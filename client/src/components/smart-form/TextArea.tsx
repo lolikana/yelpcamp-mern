@@ -6,7 +6,7 @@ import { ITextArea } from './types';
 const TextArea: FC<ITextArea> = ({ register, error, name }) => {
   return (
     <FieldWrapper error={error} name={name}>
-      <textarea {...register} name={name} />
+      <textarea {...register!(name)} name={name} />
     </FieldWrapper>
   );
 };

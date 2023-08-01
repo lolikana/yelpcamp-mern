@@ -6,7 +6,12 @@ import { IInput } from './types';
 const Input: FC<IInput> = ({ register, error, name, type }) => {
   return (
     <FieldWrapper error={error} name={name}>
-      <input {...register} name={name} type={type} min={type === 'number' ? 1 : ''} />
+      <input
+        {...register!(name, { valueAsNumber: type === 'number' ? true : false })}
+        name={name}
+        type={type}
+        min={type === 'number' ? 1 : ''}
+      />
     </FieldWrapper>
   );
 };

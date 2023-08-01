@@ -36,5 +36,5 @@ export const CampgroundValidation = z.object({
   title: z.string().min(1, { message: 'Enter a title' }),
   location: z.string().min(1, { message: 'Enter a location' }),
   description: z.string().min(1, { message: 'Enter a description' }),
-  price: z.string().min(1, { message: 'Enter a price' })
+  price: z.number().min(1, { message: 'Enter a price' })
 });

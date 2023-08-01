@@ -7,7 +7,7 @@ import { TResponseCampground } from './../../components/campgrounds/types';
 const Campgrounds = () => {
   const { campgrounds } = useLoaderData() as { campgrounds: TResponseCampground[] };
   return (
-    <Suspense fallback={<p className="suspense">Loading...</p>}>
+    <Suspense fallback={<p className="suspense">Loading campgrounds...</p>}>
       <Await resolve={campgrounds}>
         {(loadedCampgrounds: TResponseCampground[]) => {
           return (

@@ -50,7 +50,7 @@ const SmartForm = <
               return createElement(child.type, {
                 ...{
                   ...child.props,
-                  register: { ...register(child.props.name) },
+                  register,
                   resetField,
                   error: errors[child.props.name]?.message,
                   key: child.props.name

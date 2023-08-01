@@ -1,4 +1,4 @@
-import Create from '@components/campgrounds/Create';
+import CampgroundForm from '@components/campgrounds/CampgroundForm';
 
 import styles from './CreateCampground.module.scss';
 
@@ -7,7 +7,7 @@ const CreateCampground = () => {
     <section className={`${styles.section} form-section`}>
       <div className="frame">
         <h2 className={styles.section__title}>Create your Camppground</h2>
-        <Create />
+        <CampgroundForm method="POST" />
       </div>
     </section>
   );

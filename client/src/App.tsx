@@ -1,7 +1,11 @@
 import '@styles/styles.scss';
 
-import { CampgroundDetail, Campgrounds, CreateCampground } from '@pages/campgrounds';
-import UpdateCampground from '@pages/campgrounds/UpdateCampground';
+import {
+  CampgroundDetail,
+  Campgrounds,
+  CreateCampground,
+  UpdateCampground
+} from '@pages/campgrounds';
 import Homepage from '@pages/homepage/Homepage';
 import Login from '@pages/login/Login';
 import RootLayout from '@pages/root-layout/RootLayout';
