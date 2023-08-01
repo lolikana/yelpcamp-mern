@@ -32,12 +32,12 @@ const CampgroundForm = ({
       };
       const body =
         method === 'PATCH'
-          ? JSON.stringify({ ...data, price: +data.price })
-          : JSON.stringify({ ...data, price: +data.price, author: auth.uid as string });
-      const res = (await sendRequest({ url, method, headers, body })) as {
+          ? JSON.stringify({ ...data })
+          : JSON.stringify({ ...data, author: auth.uid as string });
+      (await sendRequest({ url, method, headers, body })) as {
         campgroundId: string;
       };
-      navigate(`/campgrounds/${res.campgroundId}`);
+      navigate(`/campgrounds`);
     } catch (err) {
       console.log(err);
     }
@@ -62,30 +62,3 @@ const CampgroundForm = ({
 };
 
 export default CampgroundForm;
-
-// export const action = async (
-//   method: 'POST' | 'PATCH',
-//   id: string | null,
-//   uid: string,
-//   data: TCampground,
-//   token: string
-// ): Promise<Response> => {
-//   const campground = data;
-//   const url = `${import.meta.env.VITE_PATH}${import.meta.env.VITE_PORT}/campgrounds${
-//     method === 'PATCH' ? '/' + id : ''
-//   }`;
-//   const headers = {
-//     'Content-Type': 'application/json',
-//     Authorization: `Bearer ${token}`
-//   };
-//   const body =
-//     method === 'PATCH'
-//       ? JSON.stringify({ ...campground })
-//       : JSON.stringify({ ...campground, author: uid });
-//   const res = await fetch(url, { method, headers, body });
-//   if (!res.ok) {
-//     // eslint-disable-next-line @typescript-eslint/no-throw-literal
-//     throw json({ message: 'Could not save campground.' }, { status: 500 });
-//   }
-//   return redirect(`/campgrounds/${res.campgroundId}`);
-// };
