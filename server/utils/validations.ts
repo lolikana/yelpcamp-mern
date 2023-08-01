@@ -64,7 +64,7 @@ export const loginSchema = z
 
 export const campgroundSchema = z.object({
   title: z.string().min(1, { message: 'A title is required' }),
-  location: z.string().min(1, { message: 'A title is required' }),
-  description: z.string().min(1, { message: 'A title is required' }),
-  price: z.number().min(1, { message: 'A title is required' })
+  location: z.string().min(1, { message: 'A location is required' }),
+  description: z.string().min(1, { message: 'A description is required' }),
+  price: z.number().min(0, { message: 'Price should be superior or equal to 0' })
 });
