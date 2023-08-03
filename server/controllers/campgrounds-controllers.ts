@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import { Types } from 'mongoose';
 
 import { CampgroundModel } from './../models/campground-model';
 import { ExpressError } from './../utils';
@@ -25,6 +26,7 @@ export default {
           filename: 'image_02'
         }
       ];
+      campground.author = new Types.ObjectId(req.userData.userId as string);
       await campground.save();
       res.json({
         campgroundId: campground.id as string

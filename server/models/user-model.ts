@@ -1,6 +1,7 @@
+import { IUser } from 'libs/types';
 import { model, Schema } from 'mongoose';
 
-const UserSchema = new Schema({
+const UserSchema = new Schema<IUser>({
   username: {
     type: String,
     required: [true, 'Username cannot be blank'],

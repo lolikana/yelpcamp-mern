@@ -1,5 +1,5 @@
 import { ICampground } from 'libs/types';
-import { model, Schema, Types } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const ImageSchema = new Schema({
   url: String,
@@ -32,7 +32,7 @@ const CampgroundSchema = new Schema<ICampground>({
     coordinates: { type: [Number], required: true }
   },
   author: {
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User'
   }
 });

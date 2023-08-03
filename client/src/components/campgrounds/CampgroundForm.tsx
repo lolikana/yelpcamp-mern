@@ -30,10 +30,7 @@ const CampgroundForm = ({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${auth.token}`
       };
-      const body =
-        method === 'PATCH'
-          ? JSON.stringify({ ...data })
-          : JSON.stringify({ ...data, author: auth.uid as string });
+      const body = JSON.stringify({ ...data });
       (await sendRequest({ url, method, headers, body })) as {
         campgroundId: string;
       };

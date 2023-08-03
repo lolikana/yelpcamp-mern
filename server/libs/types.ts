@@ -14,6 +14,7 @@ export interface IUser {
   _id: Types.ObjectId;
   email: string;
   username: string;
+  password: string;
 }
 
 export interface ICampground {
@@ -24,7 +25,7 @@ export interface ICampground {
   description: string;
   location: string;
   geometry: IGeometry;
-  author: IUser;
+  author: Types.ObjectId;
 }
 
 interface IImgCamp {
