@@ -1,10 +1,11 @@
 // /* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { createContext } from 'react';
 
 type AuthContextType = {
   uid: string | null;
   token: string | null;
-  login: (uid: string, token: string) => void;
+  login: (uid: string, token: string, expiration: string) => void;
   logout: () => void;
 };
 
