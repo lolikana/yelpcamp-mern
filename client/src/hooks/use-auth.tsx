@@ -48,6 +48,8 @@ const useAuth = () => {
     };
     if (storedData && storedData.token && new Date(storedData.expiration) > new Date()) {
       login(storedData.userId, storedData.token, storedData.expiration);
+    } else {
+      logout();
     }
   }, [login]);
 
