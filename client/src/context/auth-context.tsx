@@ -5,7 +5,7 @@ import { createContext } from 'react';
 type AuthContextType = {
   uid: string | null;
   token: string | null;
-  login: (uid: string, token: string, expiration: string) => void;
+  login: (uid: string, token: string, expiration?: string) => void;
   logout: () => void;
 };
 
