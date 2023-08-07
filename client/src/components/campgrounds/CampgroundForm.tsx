@@ -23,9 +23,7 @@ const CampgroundForm = ({
 
   const onSubmit = async (data: TCampground) => {
     try {
-      const url = `${import.meta.env.VITE_PATH}${import.meta.env.VITE_PORT}/campgrounds${
-        method === 'PATCH' ? '/' + campgroundId : ''
-      }`;
+      const url = `/api/campgrounds${method === 'PATCH' ? '/' + campgroundId : ''}`;
       const headers = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${auth.token}`

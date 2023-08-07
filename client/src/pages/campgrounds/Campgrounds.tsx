@@ -24,7 +24,7 @@ const Campgrounds = () => {
 export default Campgrounds;
 
 const loadCampgrounds = async (token: string): Promise<TResponseCampground[]> => {
-  const url = `${import.meta.env.VITE_PATH}${import.meta.env.VITE_PORT}/campgrounds`;
+  const url = `/api/campgrounds`;
   const headers = { Authorization: `Bearer ${token}` };
   const res = await fetch(url, { headers });
   if (!res.ok) {

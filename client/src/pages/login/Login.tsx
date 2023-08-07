@@ -34,7 +34,7 @@ const Login = () => {
   const onSubmit = async (data: TLogin) => {
     try {
       const { email, password } = data;
-      const url = `${import.meta.env.VITE_PATH}${import.meta.env.VITE_PORT}/login`;
+      const url = `/api/login`;
       const method = 'POST';
       const headers = {
         'Content-Type': 'application/json'

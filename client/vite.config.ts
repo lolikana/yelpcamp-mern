@@ -79,7 +79,13 @@ export default defineConfig(({ command }) => {
       exclude: ['node_modules', './__tests__/setup.ts', './__tests__/renderWithRouter.ts']
     },
     server: {
-      port: 4000
+      port: 4000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5001',
+          changeOrigin: true
+        }
+      }
     }
   };
 });
