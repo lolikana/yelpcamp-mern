@@ -90,5 +90,13 @@ export default {
       const error = new ExpressError(err as string, 500);
       return next(error);
     }
+  }) as RequestHandler,
+
+  logout: ((_req, res) => {
+    res.cookie('access_token', '', {
+      httpOnly: true,
+      expires: new Date(0)
+    });
+    res.status(200).json({ message: 'Logged out successfully' });
   }) as RequestHandler
 };

@@ -8,6 +8,13 @@ import styles from './NavMenu.module.scss';
 const NavMenu: FC<{ isHidden: boolean }> = ({ isHidden }) => {
   const auth = useContext(AuthContext);
 
+  const logoutHandler = async () => {
+    await fetch('/api/logout', {
+      method: 'POST'
+    });
+    return auth.logout();
+  };
+
   return (
     <ul aria-hidden={isHidden} className={styles.menu}>
       {auth.token ? (
@@ -19,7 +26,7 @@ const NavMenu: FC<{ isHidden: boolean }> = ({ isHidden }) => {
             <Link to="/campgrounds/new-campground">Add</Link>
           </li>
           <li>
-            <NormalButton text="Logout" style="cancel" onClick={auth.logout} />
+            <NormalButton text="Logout" style="cancel" onClick={logoutHandler} />
           </li>
         </>
       ) : (
