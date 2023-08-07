@@ -1,11 +1,10 @@
 import bcrypt from 'bcryptjs';
 import { RequestHandler } from 'express';
-import jwt from 'jsonwebtoken';
 
-import { isProduction } from './../configs/mongodb';
 import { ISignup } from './../libs/types';
 import { User } from './../models';
 import { ExpressError } from './../utils';
+import generateToken from './../utils/generateToken';
 import { loginSchema, signupSchema } from './../utils/validations';
 
 export default {
@@ -48,13 +47,11 @@ export default {
       await newUser.save();
 
       const uid = newUser.id as string;
-      const token = jwt.sign(
-        { userId: uid, email: newUser.email },
-        isProduction ? (process.env.JWT_SECRET as string) : 'supersecret_dont_share',
-        { expiresIn: '1h' }
-      );
+      const userEmail = newUser.email as string;
 
-      return res.status(201).send({ userId: uid, email: newUser.email, token });
+      const token = generateToken(res, uid, userEmail);
+
+      return res.status(201).send({ userId: uid, email: userEmail, token });
     } catch (err) {
       return next(err);
     }
@@ -76,14 +73,13 @@ export default {
         return next(error);
       }
       const uid = user.id as string;
-      const token = jwt.sign(
-        { userId: uid, email: user.email },
-        isProduction ? (process.env.JWT_SECRET as string) : 'supersecret_dont_share',
-        { expiresIn: '1h' }
-      );
+      const userEmail = user.email as string;
+
+      const token = generateToken(res, uid, userEmail);
+
       return res.json({
         userId: uid,
-        email: user.email,
+        email: userEmail,
         token
       });
     } catch (err) {
