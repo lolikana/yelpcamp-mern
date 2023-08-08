@@ -1,7 +1,7 @@
 import { Input, SmartForm } from '@components/smart-form';
 import Button from '@components/ui/buttons/Button';
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useHttpClient } from './../../hooks/use-http';
 import useTitle from './../../hooks/use-title';
@@ -17,6 +17,7 @@ const defaultValues = {
 };
 
 const Signup = () => {
+  const navigate = useNavigate();
   const headTitleRef = useRef<string>('Signup');
   useTitle(headTitleRef.current);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -44,8 +45,8 @@ const Signup = () => {
         password: password,
         confirmPassword: confirmPassword
       });
-      const res = (await sendRequest({ url, method, headers, body })) as Promise<TSignup>;
-      console.log(res);
+      (await sendRequest({ url, method, headers, body })) as Promise<TSignup>;
+      navigate('/login');
     } catch (err) {
       console.log(err);
     }
