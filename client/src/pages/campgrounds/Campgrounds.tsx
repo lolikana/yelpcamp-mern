@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { Await, defer, json, useLoaderData } from 'react-router-dom';
 
 import { TResponseCampground } from './../../components/campgrounds/types';
+import styles from './Campgrounds.module.scss';
 
 const Campgrounds = () => {
   const { campgrounds } = useLoaderData() as { campgrounds: TResponseCampground[] };
@@ -11,7 +12,7 @@ const Campgrounds = () => {
       <Await resolve={campgrounds}>
         {(loadedCampgrounds: TResponseCampground[]) => {
           return (
-            <article className={'page-article'}>
+            <article className={`${styles.container} page-article`}>
               <CampgroundsList campgrounds={loadedCampgrounds} />
             </article>
           );
