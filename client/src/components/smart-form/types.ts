@@ -1,5 +1,10 @@
 import { HTMLInputTypeAttribute, ReactNode } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import {
+  FieldValues,
+  UseFormRegister,
+  UseFormResetField,
+  UseFormSetValue
+} from 'react-hook-form';
 
 export interface IFieldWrapper extends Omit<IInput, 'register'> {
   children: ReactNode;
@@ -14,3 +19,9 @@ export interface IInput {
 }
 
 export interface ITextArea extends Omit<IInput, 'type'> {}
+
+export interface IInputFile extends IInput {
+  resetField?: UseFormResetField<FieldValues>;
+  setValue?: UseFormSetValue<FieldValues>;
+  resetFormThumbnail?: boolean;
+}

@@ -3,6 +3,7 @@ export type TCampground = {
   location: string;
   description: string;
   price: string;
+  images?: FileList;
 };
 
 export type TResponseCampground = {
