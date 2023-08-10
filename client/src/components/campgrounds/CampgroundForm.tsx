@@ -9,13 +9,6 @@ import { useHttpClient } from '../../hooks/use-http';
 import { CampgroundValidation } from '../../libs/validations';
 import { TCampground } from './types';
 
-const defaultValuees: TCampground = {
-  title: 'test',
-  location: 'test',
-  description: 'test',
-  price: '24'
-};
-
 const CampgroundForm = ({
   method,
   defaultValues
@@ -26,13 +19,12 @@ const CampgroundForm = ({
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
   const campgroundId = useParams().campgroundId;
-  const { sendRequest } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
 
   const onSubmit = async (data: TCampground) => {
     try {
       const url = `/api/campgrounds${method === 'PATCH' ? '/' + campgroundId : ''}`;
       const headers = {
-        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${auth.token}`
       };
 
@@ -49,14 +41,12 @@ const CampgroundForm = ({
         }
       }
       const body = formData;
-      console.log(Array.from(formData));
-      // const body = JSON.stringify({ ...data });
       (await sendRequest({ url, method, headers, body })) as {
         campgroundId: string;
       };
       navigate(`/campgrounds`);
     } catch (err) {
-      console.log('Submit error:', err);
+      if (err instanceof Error) console.log('Submit form error:', err.message);
     }
   };
 
@@ -66,7 +56,7 @@ const CampgroundForm = ({
       validationSchema={CampgroundValidation}
       cancelLink="/campgrounds"
       options={{
-        defaultValues: method === 'PATCH' ? defaultValues : defaultValuees
+        defaultValues: method === 'PATCH' ? defaultValues : undefined
       }}
     >
       <Input name="title" />
@@ -74,7 +64,7 @@ const CampgroundForm = ({
       <TextArea name="description" />
       <Input name="price" type="number" />
       <InputFiles name="images" />
-      <Button type="submit" text="Submit" style="submit" />
+      <Button type="submit" text="Submit" style="submit" disabled={isLoading} />
     </SmartForm>
   );
 };

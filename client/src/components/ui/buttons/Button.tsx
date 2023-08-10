@@ -6,13 +6,18 @@ interface Props {
   type: 'submit';
   text: string;
   style: 'submit';
+  disabled?: boolean;
 }
 
 const Button: FC<Props> = props => {
-  const { type, text, style } = props;
+  const { type, text, style, disabled } = props;
   return (
-    <button type={type} className={`${styles.button} ${styles[style]}`}>
-      {text}
+    <button
+      type={type}
+      className={`${styles.button} ${styles[style]}`}
+      disabled={disabled}
+    >
+      {!disabled ? text : 'Loading...'}
     </button>
   );
 };

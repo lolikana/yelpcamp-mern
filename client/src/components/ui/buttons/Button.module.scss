@@ -22,3 +22,7 @@
     0 0 10px $__main,
     0 0 5px #c2c6c6;
 }
+
+.button.button.submit:disabled {
+  cursor: not-allowed;
+}

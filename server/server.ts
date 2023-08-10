@@ -1,5 +1,6 @@
 import cookieParser from 'cookie-parser';
 import express, { ErrorRequestHandler } from 'express';
+import helmet from 'helmet';
 
 import { mongoConnection } from './configs';
 import { router as campgroundsRoutes } from './routes/campgrounds-routes';
@@ -13,6 +14,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'"],
+      scriptSrc: ["'unsafe-inline'", "'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      workerSrc: ["'self'", 'blob:'],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        'blob:',
+        'data:',
+        'https://res.cloudinary.com/dgjgwco0f/',
+        'https://images.unsplash.com/',
+        'https://www.theglobeandmail.com/resizer/'
+      ],
+      fontSrc: ["'self'"]
+    }
+  })
+);
 
 app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

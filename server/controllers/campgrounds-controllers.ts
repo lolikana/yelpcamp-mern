@@ -13,19 +13,34 @@ export default {
         const error = new ExpressError(result.error.issues[0].message, 422);
         return next(error);
       }
-
       const campground = new CampgroundModel(req.body);
       campground.geometry = { type: 'Point', coordinates: [100, 100] };
-      campground.images = [
-        {
-          url: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-          filename: 'image_01'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1601134917279-ef70a0a90f18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-          filename: 'image_02'
+      if (!req.files) {
+        return next(new ExpressError('Please upload an image', 400));
+      }
+
+      campground.images = [];
+
+			if (Array.isArray(req.files)) {
+        for (const file of req.files) {
+          campground.images.push({
+            url: file.path,
+            filename: file.filename
+          });
         }
-      ];
+      } else if (typeof req.files === 'object') {
+        for (const key in req.files) {
+          if (Array.isArray(req.files[key])) {
+            for (const file of req.files[key]) {
+              campground.images.push({
+                url: file.path,
+                filename: file.filename
+              });
+            }
+          }
+        }
+      }
+
       campground.author = new Types.ObjectId(req.userData.userId as string);
       await campground.save();
       res.json({
