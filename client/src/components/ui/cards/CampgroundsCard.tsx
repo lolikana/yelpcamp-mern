@@ -1,3 +1,4 @@
+import NoImage from '@assets/mo-image.jpg';
 import { Link } from 'react-router-dom';
 
 import ButtonLink from '../buttons/ButtonLink';
@@ -11,7 +12,7 @@ const CampgroundsCard = (props: { campground: TResponseCampground }) => {
   return (
     <div className={styles.card}>
       <Link to={`/campgrounds/${_id}`} className={styles.card__image}>
-        <img src={images[0].url} alt="" />
+        <img src={images.length !== 0 ? images[0].url : NoImage} alt="" />
       </Link>
       <div className={styles.card__text}>
         <div className={styles.card__text_top}>
