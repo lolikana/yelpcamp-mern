@@ -58,17 +58,13 @@ export const CampgroundValidation = z.object({
   price: z.number().min(1, { message: 'Enter a price' }),
   images: z
     .custom<FileList>()
-    .refine(files => files.length !== 0, { message: '必須です' })
+    .refine(files => files.length !== 0, {
+      message: 'Please, insert at least one image (max 3)'
+    })
     .refine(files => checkFileSize(files), {
       message: 'File size must be less than 5mb'
     })
-    .refine(
-      files => {
-        console.log(checkFileType(files));
-        return checkFileType(files);
-      },
-      {
-        message: 'File type must be .jpg or .png'
-      }
-    )
+    .refine(files => checkFileType(files), {
+      message: 'File type must be .jpg, .jpeg or .png'
+    })
 });

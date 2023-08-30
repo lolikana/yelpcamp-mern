@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
-import { User } from './../models';
+import { User } from '../models';
 
 export const signupSchema = z
   .object({
@@ -66,6 +66,5 @@ export const campgroundSchema = z.object({
   title: z.string().min(1, { message: 'A title is required' }),
   location: z.string().min(1, { message: 'A location is required' }),
   description: z.string().min(1, { message: 'A description is required' }),
-  price: z.string().min(0, { message: 'Price should be superior or equal to 0' }),
-  images: z.any()
+  price: z.string().min(0, { message: 'Price should be superior or equal to 0' })
 });
