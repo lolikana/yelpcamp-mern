@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
 import { Types } from 'mongoose';
 
+import { campgroundSchema } from '../libs/validations';
 import { CampgroundModel } from './../models/campground-model';
 import { ExpressError } from './../utils';
-import { campgroundSchema } from './../utils/validations';
 
 export default {
   create: (async (req, res, next) => {
@@ -21,7 +21,7 @@ export default {
 
       campground.images = [];
 
-			if (Array.isArray(req.files)) {
+      if (Array.isArray(req.files)) {
         for (const file of req.files) {
           campground.images.push({
             url: file.path,
@@ -47,6 +47,10 @@ export default {
         campgroundId: campground.id as string
       });
     } catch (err) {
+      if (err instanceof Error) {
+        const error = new ExpressError(err.message, 500);
+        return next(error);
+      }
       const error = new ExpressError(
         'Could not create a campground, please try again',
         500

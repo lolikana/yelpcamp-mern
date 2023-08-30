@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs';
 import { RequestHandler } from 'express';
 
+import { loginSchema, signupSchema } from '../libs/validations';
 import { ISignup } from './../libs/types';
 import { User } from './../models';
 import { ExpressError } from './../utils';
 import generateToken from './../utils/generateToken';
-import { loginSchema, signupSchema } from './../utils/validations';
 
 export default {
   singup: (async (req, res, next) => {
