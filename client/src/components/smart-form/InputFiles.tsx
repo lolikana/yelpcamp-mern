@@ -1,22 +1,22 @@
+import Thumbnail from '@components/ui/thumbnail/Thumbnail';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
+import { convert2base64 } from './../../libs/helpers';
 import FieldWrapper from './FieldWrapper';
 import { IInputFile } from './types';
-import { convert2base64 } from './../../libs/helpers';
-import Thumbnail from '@components/ui/thumbnail/Thumbnail';
 
 const InputFiles: FC<IInputFile> = ({
   register,
   error,
   name,
   resetField,
-  setValue,
+  // setValue,
   resetFormThumbnail
 }) => {
   const [thumbnails, setThumbnails] = useState<
     { file: File; thumbnail: string; name: string; size: string }[]
   >([]);
-  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const files = e.target.files as FileList;
 
     const filesArray = Array.from(files);
@@ -58,13 +58,12 @@ const InputFiles: FC<IInputFile> = ({
     });
 
     const convertedFileList = fileList.files;
-
     // Wait for the state update and then reset the field
-    // resetField?.(name, {
-    //   defaultValue: convertedFileList
-    // });
+    resetField?.(name, {
+      defaultValue: convertedFileList
+    });
     const input = (document.querySelector(`input[name=${name}]`) as HTMLInputElement)!;
-    // input.files = convertedFileList;
+    input.files = convertedFileList;
   };
 
   useEffect(() => {
@@ -79,7 +78,7 @@ const InputFiles: FC<IInputFile> = ({
           {...register!(name)}
           name={name}
           type="file"
-          accept=".png,.jpg,.jpeg"
+          accept=".png,.jpg,.jpeg,.gif"
           onChange={handleChange}
           multiple
         />
