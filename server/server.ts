@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express, { ErrorRequestHandler } from 'express';
 import helmet from 'helmet';
 
@@ -9,6 +10,15 @@ import { ExpressError } from './utils';
 
 const port = process.env.VITE_PORT || 3001;
 const app = express();
+
+{
+  process.env.NODE_ENV === 'production' &&
+    app.use(
+      cors({
+        origin: process.env.CLIENT_URL
+      })
+    );
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
