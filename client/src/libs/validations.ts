@@ -32,10 +32,43 @@ export const SignupValidation = z
     message: 'Password do not match'
   });
 
+const MAX_FILE_SIZE = 5000000;
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+
+const checkFileSize = (files: FileList) => {
+  return Array.from(files).every(file => {
+    return file.size < MAX_FILE_SIZE;
+  });
+};
+
+function checkFileType(files: FileList) {
+  return Array.from(files).every(file => {
+    const fileType = file.name.split('.').pop();
+    return ACCEPTED_IMAGE_TYPES.some(type => {
+      const typeSplit = type.split('/').pop();
+      return fileType === typeSplit;
+    });
+  });
+}
+
 export const CampgroundValidation = z.object({
   title: z.string().min(1, { message: 'Enter a title' }),
   location: z.string().min(1, { message: 'Enter a location' }),
   description: z.string().min(1, { message: 'Enter a description' }),
   price: z.number().min(1, { message: 'Enter a price' }),
-  images: z.any({ required_error: 'Select at least one image' })
+  images: z
+    .custom<FileList>()
+    .refine(files => files.length !== 0, { message: '必須です' })
+    .refine(files => checkFileSize(files), {
+      message: 'File size must be less than 5mb'
+    })
+    .refine(
+      files => {
+        console.log(checkFileType(files));
+        return checkFileType(files);
+      },
+      {
+        message: 'File type must be .jpg or .png'
+      }
+    )
 });
