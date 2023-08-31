@@ -34,7 +34,9 @@ const Signup = () => {
   const onSubmit = async (data: TSignup) => {
     try {
       const { username, email, password, confirmPassword } = data;
-      const url = `/api/signup`;
+      const url = `${
+        import.meta.env.PROD ? import.meta.env.VITE_SERVER_URL : ''
+      }/api/signup`;
       const method = 'POST';
       const headers = {
         'Content-Type': 'application/json'

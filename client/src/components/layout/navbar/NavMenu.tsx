@@ -9,9 +9,12 @@ const NavMenu: FC<{ isHidden: boolean }> = ({ isHidden }) => {
   const auth = useContext(AuthContext);
 
   const logoutHandler = async () => {
-    await fetch('/api/logout', {
-      method: 'POST'
-    });
+    await fetch(
+      `${import.meta.env.PROD ? import.meta.env.VITE_SERVER_URL : ''}/api/logout`,
+      {
+        method: 'POST'
+      }
+    );
     return auth.logout();
   };
 

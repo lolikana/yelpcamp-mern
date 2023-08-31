@@ -40,7 +40,9 @@ const loadCampground = async (
   id: string,
   token: string
 ): Promise<TResponseCampground> => {
-  const url = `/api/campgrounds/${id}`;
+  const url = `${
+    import.meta.env.PROD ? import.meta.env.VITE_SERVER_URL : ''
+  }/api/campgrounds/${id}`;
   const headers = { Authorization: `Bearer ${token}` };
   const res = await fetch(url, { headers });
   if (!res.ok) {
@@ -57,7 +59,9 @@ export const loader = (id: string, token: string): { data: Record<string, unknow
 };
 
 export const action = async (id: string, token: string): Promise<Response> => {
-  const url = `/api/campgrounds/${id}`;
+  const url = `${
+    import.meta.env.PROD ? import.meta.env.VITE_SERVER_URL : ''
+  }/api/campgrounds/${id}`;
   const method = 'DELETE';
   const headers = {
     Authorization: `Bearer ${token}`
