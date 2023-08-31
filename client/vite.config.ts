@@ -21,6 +21,7 @@ const formatScopedName = (local: string, resourcePath: string) => {
 
 export default defineConfig(({ command, mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  console.log(process.env.NODE_ENV);
   return {
     plugins: [react()],
     build: {
