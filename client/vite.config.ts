@@ -4,7 +4,7 @@
 import react from '@vitejs/plugin-react-swc';
 import hash from 'crypto';
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
 const outDir = 'dist';
 
@@ -19,7 +19,8 @@ const formatScopedName = (local: string, resourcePath: string) => {
   return `${componentName}_${local}__${hashed}`;
 };
 
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command, mode }) => {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
   return {
     plugins: [react()],
     build: {
@@ -58,7 +59,7 @@ export default defineConfig(({ command }) => {
         }
       ]
     },
-    envDir: './../',
+    // envDir: './../',
     css: {
       modules: {
         scopeBehaviour: 'local',
@@ -82,7 +83,10 @@ export default defineConfig(({ command }) => {
       port: 4000,
       proxy: {
         '/api': {
-          target: 'http://localhost:3001',
+          target:
+            process.env.NODE_ENV === 'production'
+              ? process.env.VITE_SERVER_URL
+              : 'http://localhost:3001',
           changeOrigin: true
         }
       }
