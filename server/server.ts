@@ -12,12 +12,11 @@ const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.VITE_PORT || 3001;
 const app = express();
 
-isProduction &&
-  app.use(
-    cors({
-      origin: process.env.CLIENT_URL
-    })
-  );
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
