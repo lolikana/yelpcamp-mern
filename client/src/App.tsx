@@ -8,9 +8,15 @@ import {
 } from '@pages/campgrounds';
 import Homepage from '@pages/homepage/Homepage';
 import Login from '@pages/login/Login';
+import ProtectedRoute from '@pages/root-layout/ProtectedRoute';
 import RootLayout from '@pages/root-layout/RootLayout';
 import Signup from '@pages/signup/Signup';
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider
+} from 'react-router-dom';
 
 import { AuthContext } from './context/auth-context';
 import useAuth from './hooks/use-auth';
@@ -22,58 +28,36 @@ import { loader as campgroundsLoader } from './pages/campgrounds/Campgrounds';
 
 function App() {
   const { uid, token, login, logout } = useAuth();
-  let router;
-  if (!token) {
-    router = createBrowserRouter([
-      {
-        path: '/',
-        element: <RootLayout />,
-        children: [
-          { index: true, element: <Homepage /> },
-          { path: 'login', element: <Login /> },
-          { path: 'signup', element: <Signup /> },
-          { path: '*', element: <Navigate to="/" /> }
-        ]
-      }
-    ]);
-  } else {
-    router = createBrowserRouter([
-      {
-        path: '/',
-        element: <RootLayout />,
-        children: [
-          { index: true, element: <Homepage /> },
-          {
-            path: 'campgrounds',
-            children: [
-              {
-                index: true,
-                element: <Campgrounds />,
-                loader: () => campgroundsLoader(token)
-              },
-              { path: 'new-campground', element: <CreateCampground /> },
-              {
-                path: ':campgroundId',
-                id: 'campground-detail',
-                loader: ({ params }) =>
-                  campgroundDetailLoader(params.campgroundId as string, token),
-                children: [
-                  {
-                    index: true,
-                    element: <CampgroundDetail />,
-                    action: ({ params }) =>
-                      deleteCampgroundAction(params.campgroundId as string, token)
-                  },
-                  { path: 'update', element: <UpdateCampground /> }
-                ]
-              }
-            ]
-          },
-          { path: '*', element: <Navigate to="/" /> }
-        ]
-      }
-    ]);
-  }
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route element={<RootLayout />}>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route
+            path="/campgrounds"
+            element={<Campgrounds />}
+            loader={() => campgroundsLoader(token!)}
+          />
+          <Route path="/campgrounds/new-campground" element={<CreateCampground />} />
+          <Route
+            path="/campgrounds/:campgroundId"
+            element={<CampgroundDetail />}
+            id="campground-detail"
+            loader={({ params }) =>
+              campgroundDetailLoader(params.campgroundId as string, token!)
+            }
+            action={({ params }) =>
+              deleteCampgroundAction(params.campgroundId as string, token!)
+            }
+          />
+          <Route path="campgrounds/:campgroundId/update" element={<UpdateCampground />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Route>
+    )
+  );
 
   return (
     <AuthContext.Provider value={{ uid, token, login, logout }}>
