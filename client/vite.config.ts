@@ -85,9 +85,7 @@ export default defineConfig(({ command, mode }) => {
       proxy: {
         '/api': {
           target:
-            process.env.NODE_ENV === 'production'
-              ? process.env.VITE_SERVER_URL
-              : 'http://localhost:3001',
+            process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3001',
           changeOrigin: true
         }
       }
