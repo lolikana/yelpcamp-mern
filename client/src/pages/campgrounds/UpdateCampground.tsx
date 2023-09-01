@@ -6,7 +6,7 @@ import { TCampground, TResponseCampground } from './../../components/campgrounds
 import styles from './CreateCampground.module.scss';
 
 const UpdateCampground = () => {
-  const campground = useRouteLoaderData('campground-detail') as {
+  const campground = useRouteLoaderData('campground-update') as {
     campground: TResponseCampground;
   };
 
