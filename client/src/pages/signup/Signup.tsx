@@ -9,13 +9,6 @@ import { SignupValidation } from './../../libs/validations';
 import styles from './../login/Login.module.scss';
 import { TSignup } from './type';
 
-const defaultValues = {
-  username: 'postman1',
-  email: 'postman1@postman.com',
-  password: 'postman1',
-  confirmPassword: 'postman1'
-};
-
 const Signup = () => {
   const navigate = useNavigate();
   const headTitleRef = useRef<string>('Signup');
@@ -62,7 +55,7 @@ const Signup = () => {
         <SmartForm<TSignup>
           validationSchema={SignupValidation}
           onSubmit={onSubmit}
-          options={{ defaultValues }}
+          options={{}}
           cancelLink="/signup"
         >
           <Input name="username" type="text" />

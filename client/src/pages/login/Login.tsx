@@ -10,11 +10,6 @@ import { LoginValidation } from './../../libs/validations';
 import styles from './Login.module.scss';
 import { TLogin, TLoginResponse } from './type';
 
-const defaultValues = {
-  email: 'postman1@postman.com',
-  password: 'postman1'
-};
-
 const Login = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
@@ -62,7 +57,7 @@ const Login = () => {
         <SmartForm<TLogin>
           validationSchema={LoginValidation}
           onSubmit={onSubmit}
-          options={{ defaultValues }}
+          options={{}}
           cancelLink="/login"
         >
           <Input name="email" type="email" />
