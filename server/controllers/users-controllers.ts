@@ -74,7 +74,6 @@ export default {
       }
       const uid = user.id as string;
       const userEmail = user.email as string;
-      console.log(uid + 'just loggedin');
 
       const token = generateToken(res, uid, userEmail);
 

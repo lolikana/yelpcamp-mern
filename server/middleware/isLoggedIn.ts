@@ -8,11 +8,9 @@ export const isLoggedIn = ((req, _res, next) => {
   if (req.method === 'OPTIONS') {
     return next();
   }
-
-  const token = (req.cookies as { access_token: string }).access_token;
+  // const token = (req.cookies as { access_token: string }).access_token;
   const tokenHeaders = req.headers.authorization?.split(' ')[1]; // Authorization: 'Bearer TOKEN'
-
-  if (token && tokenHeaders && token === tokenHeaders) {
+  if (tokenHeaders) {
     try {
       const decoded = jwt.verify(
         tokenHeaders,
@@ -23,11 +21,14 @@ export const isLoggedIn = ((req, _res, next) => {
       req.userData = { userId: decoded.userId };
       next();
     } catch (err) {
-      const error = new ExpressError('Authentication failed!', 401);
+      const error = new ExpressError(
+        `Authentication failed! ${(err as Error).message}`,
+        401
+      );
       return next(error);
     }
   } else {
-    const error = new ExpressError('Not authorized, no token', 401);
+    const error = new ExpressError(`Not authorized, token not valid`, 401);
     return next(error);
   }
 }) as RequestHandler;
