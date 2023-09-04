@@ -6,10 +6,12 @@ import mongoose from 'mongoose';
 dotenv.config({ path: '../.env.local' });
 
 export const isProduction = process.env.NODE_ENV === 'production';
+const isPreview = process.env.NODE_ENV === 'preview';
 
-const mongoDBUri = isProduction
-  ? (process.env.MONGO_URI as string)
-  : `mongodb://localhost:27017/${process.env.MONGO_DB as string}`;
+const mongoDBUri =
+  isProduction || isPreview
+    ? (process.env.MONGO_URI as string)
+    : `mongodb://localhost:27017/${process.env.MONGO_DB as string}`;
 
 mongoose.set('strictQuery', false);
 // Wait for database to connect, logging an error if there is a problem

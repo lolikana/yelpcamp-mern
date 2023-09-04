@@ -50,7 +50,7 @@ app.use(
 app.use((_req, res, next) => {
   res.setHeader(
     'Access-Control-Allow-Origin',
-    `${!isProduction ? '*' : process.env.CLIENT_URL}`
+    `${isProduction ? process.env.CLIENT_URL : '*'}`
   );
   res.setHeader(
     'Access-Control-Allow-Headers',

@@ -8,7 +8,7 @@
     "client:prod": "cd client && npm run build && npm run preview",
     "server": "cd server && npm run server",
     "dev": "concurrently \"npm run server\" \"npm run client:dev\"",
-    "preview": "concurrently \"NODE_ENV=production npm run server\" \"npm run client:prod\"",
+    "preview": "concurrently \"NODE_ENV=preview npm run server\" \"NODE_ENV=preview npm run client:prod\"",
     "lint": "eslint --fix -f table .",
     "lint-staged": "lint-staged",
     "prettier-format": "prettier --config .prettierrc './**/*.{tsx,ts,css,scss,json}' --write",
