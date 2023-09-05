@@ -25,11 +25,13 @@ The project uses the following technologies:
 - React.js for building the user interface.
 - React Router for client-side routing.
 - Context API for state management.
+- Deploy: Vercel
   
 ### Backend:
 - Node.js and Express.js for building the server.
 - MongoDB for the database, with Mongoose for modeling data.
 - Cloudinary for image storage and management.
+- Deploy: Render
 
 ## To-Dos
 - [ ] Implement image upload for campgrounds.
