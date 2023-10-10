@@ -36,7 +36,6 @@ const Login = () => {
       const headers = {
         'Content-Type': 'application/json'
       };
-      console.log(import.meta.env.PROD);
       const body = JSON.stringify({
         email: email,
         password: password
