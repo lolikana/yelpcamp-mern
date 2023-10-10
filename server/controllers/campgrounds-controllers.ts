@@ -1,3 +1,4 @@
+import { UploadApiResponse } from 'cloudinary';
 import { RequestHandler } from 'express';
 import { Types } from 'mongoose';
 
@@ -69,7 +70,7 @@ export default {
         return next(error);
       }
 
-      await CampgroundModel.findOneAndUpdate(
+      const campground = await CampgroundModel.findOneAndUpdate(
         {
           author: req.userData.userId as string,
           _id: campgroundId
@@ -77,6 +78,18 @@ export default {
         { ...result.data },
         { new: true }
       );
+      const images: { url: string; filename: string }[] = (
+        req.files as UploadApiResponse
+      ).map((file: any) => ({
+        url: file.path,
+        filename: file.filename
+      }));
+
+      if (images.length !== 0) {
+        (campground?.images as { url: string; filename: string }[]).push(...images);
+        await campground?.save();
+      }
+
       res.json({
         campgroundId: campgroundId
       });

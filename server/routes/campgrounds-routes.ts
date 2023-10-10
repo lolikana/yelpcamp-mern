@@ -18,5 +18,5 @@ router
 router
   .route('/:campgroundId')
   .get(campgrounds.readOne)
-  .patch(campgrounds.update)
+  .patch(uploadFile.array('images'), campgrounds.update)
   .delete(campgrounds.delete);

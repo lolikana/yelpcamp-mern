@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth-context';
 import { useHttpClient } from '../../hooks/use-http';
-import { CampgroundValidation } from '../../libs/validations';
+import { CampgroundUpdateValidation, CampgroundValidation } from '../../libs/validations';
 import { TCampground } from './types';
 
 const CampgroundForm = ({
@@ -29,7 +29,6 @@ const CampgroundForm = ({
       const headers = {
         Authorization: `Bearer ${auth.token}`
       };
-
       const { images, ...item } = data;
       const productsData = { ...item };
 
@@ -55,10 +54,12 @@ const CampgroundForm = ({
   return (
     <SmartForm<TCampground>
       onSubmit={onSubmit}
-      validationSchema={CampgroundValidation}
+      validationSchema={
+        method === 'PATCH' ? CampgroundUpdateValidation : CampgroundValidation
+      }
       cancelLink="/campgrounds"
       options={{
-        defaultValues: method === 'PATCH' ? defaultValues : undefined
+        defaultValues: method === 'PATCH' ? { ...defaultValues, images: [] } : undefined
       }}
     >
       <Input name="title" />
