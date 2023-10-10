@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import { storage } from './../configs/cloudinary';
+import { storage } from '../configs/cloudinary';
 import campgrounds from './../controllers/campgrounds-controllers';
 import { isLoggedIn } from './../middleware/isLoggedIn';
 

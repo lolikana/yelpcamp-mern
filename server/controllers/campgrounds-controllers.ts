@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import { Types } from 'mongoose';
 
+import cloudinary from '../configs/cloudinary';
 import { campgroundSchema } from '../libs/validations';
 import { CampgroundModel } from './../models/campground-model';
 import { ExpressError } from './../utils';
@@ -23,7 +24,7 @@ export default {
 
       if (Array.isArray(req.files)) {
         for (const file of req.files) {
-          campground.images.push({
+          (campground.images as { url: string; filename: string }[]).push({
             url: file.path,
             filename: file.filename
           });
@@ -32,7 +33,7 @@ export default {
         for (const key in req.files) {
           if (Array.isArray(req.files[key])) {
             for (const file of req.files[key]) {
-              campground.images.push({
+              (campground.images as { url: string; filename: string }[]).push({
                 url: file.path,
                 filename: file.filename
               });
@@ -97,7 +98,7 @@ export default {
       res.json(campgrounds);
     } catch (err) {
       const error = new ExpressError(
-        'Something went wrong whent fetching the campgrounds',
+        'Something went wrong when fetching the campgrounds',
         500
       );
       next(error);
@@ -114,7 +115,7 @@ export default {
       res.json(campground);
     } catch (err) {
       const error = new ExpressError(
-        'Something went wrong whent fetching the campground',
+        'Something went wrong when fetching the campground',
         500
       );
       next(error);
@@ -124,14 +125,20 @@ export default {
   delete: (async (req, res, next) => {
     try {
       const { campgroundId } = req.params;
+      const campground = await CampgroundModel.findById(campgroundId);
       await CampgroundModel.findOneAndDelete({
         author: req.userData.userId as string,
         _id: campgroundId
       });
+      if (campground) {
+        (campground.images as { url: string; filename: string }[]).map(
+          async img => await cloudinary.uploader.destroy(img.filename)
+        );
+      }
       res.status(200).json({ message: 'Deleted campground.' });
     } catch (err) {
       const error = new ExpressError(
-        'Something went wrong whent fetching the campgrounds',
+        'Something went wrong when trying to delete the campground',
         500
       );
       next(error);
