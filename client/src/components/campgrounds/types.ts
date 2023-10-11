@@ -4,6 +4,7 @@ export type TCampground = {
   description: string;
   price: string;
   images?: FileList | never[];
+  geometry: { type: 'Point'; coordinates: [number, number] };
 };
 
 export type TResponseCampground = {

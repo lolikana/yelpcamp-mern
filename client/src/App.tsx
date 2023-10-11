@@ -1,4 +1,5 @@
 import '@styles/styles.scss';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 import {
   CampgroundDetail,

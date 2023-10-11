@@ -1,4 +1,5 @@
 import CampgroundsList from '@components/campgrounds/CampgroundsList';
+import MapBox from '@components/ui/map/MapBox';
 import { Suspense } from 'react';
 import { Await, defer, useLoaderData } from 'react-router-dom';
 
@@ -12,9 +13,12 @@ const Campgrounds = () => {
       <Await resolve={campgrounds}>
         {(loadedCampgrounds: TResponseCampground[]) => {
           return (
-            <article className={`${styles.container} page-article`}>
-              <CampgroundsList campgrounds={loadedCampgrounds} />
-            </article>
+            <>
+              <article className={`${styles.container} page-article`}>
+                <MapBox campgroundsData={loadedCampgrounds} />
+                <CampgroundsList campgrounds={loadedCampgrounds} />
+              </article>
+            </>
           );
         }}
       </Await>
