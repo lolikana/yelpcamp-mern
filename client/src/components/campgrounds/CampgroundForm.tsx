@@ -29,13 +29,18 @@ const CampgroundForm = ({
       const headers = {
         Authorization: `Bearer ${auth.token}`
       };
-      const { images, ...item } = data;
+      const { images, geometry, ...item } = data;
       const productsData = { ...item };
 
       const formData = new FormData();
       for (const [key, value] of Object.entries(productsData)) {
         formData.append(key, value);
       }
+
+      if (geometry) {
+        formData.append('geometry', JSON.stringify(geometry));
+      }
+
       if (images) {
         for (let i = 0; i < images.length; i++) {
           formData.append('images', images[i]);

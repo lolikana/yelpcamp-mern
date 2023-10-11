@@ -87,7 +87,6 @@ export default {
       const geoData = await geocoder
         .forwardGeocode({ query: result.data.location, limit: 1 })
         .send();
-      console.log(geoData.body.features);
 
       const campground = await CampgroundModel.findOneAndUpdate(
         {
