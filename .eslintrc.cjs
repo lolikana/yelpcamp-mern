@@ -53,6 +53,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'require-await': 'off',
     '@typescript-eslint/require-await': 'warn',
+    '@typescript-eslint/no-explicit-any': 'warn',
     'react/jsx-uses-react': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }]
   },
