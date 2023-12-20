@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import * as dotenv from 'dotenv';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { CloudinaryStorage, Options } from 'multer-storage-cloudinary';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
@@ -17,7 +17,7 @@ export const storage = new CloudinaryStorage({
   params: {
     folder: process.env.CLOUDINARY_FOLDER,
     allowed_formats: ['jpeg', 'png', 'jpg']
-  } as any
-});
+  }
+} as Options);
 
 export default cloudinary;
