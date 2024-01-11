@@ -21,7 +21,6 @@ body {
     'Open Sans',
     'Helvetica Neue',
     sans-serif;
-  height: 100vh;
   min-width: 245px;
   color: $__main;
   background-image: url('./../assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
@@ -31,12 +30,12 @@ body {
   background-attachment: fixed;
 }
 
-#root {
-  height: 100%;
-}
-
 main {
   padding: $__header_height 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 input {
