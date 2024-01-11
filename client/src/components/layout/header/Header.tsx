@@ -9,9 +9,9 @@ const Header = () => {
   return (
     <>
       <header data-testid="header-component" className={styles.header}>
-        <div className={styles.logo} onClick={() => navigate('/')}>
+        <div className={styles.header__logo} onClick={() => navigate('/')}>
           <img src={CampLogo} alt="Logo website" />
-          <span>YourCampSite</span>
+          <span className={styles.header__logo_text}>YourCampSite</span>
         </div>
       </header>
       <Navbar />

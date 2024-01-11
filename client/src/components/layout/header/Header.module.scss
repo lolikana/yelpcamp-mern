@@ -12,7 +12,7 @@
   backdrop-filter: blur(8px);
 }
 
-.logo {
+.header__logo {
   height: 100%;
   display: flex;
   align-items: center;
@@ -26,5 +26,14 @@
 
   span {
     font-weight: $__bold;
+  }
+}
+
+.header__logo_text {
+  display: none;
+}
+@include mq(xs) {
+  .header__logo_text {
+    display: inline-block;
   }
 }
