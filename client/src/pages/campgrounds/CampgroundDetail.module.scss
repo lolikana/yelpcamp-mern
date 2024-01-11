@@ -2,3 +2,7 @@
   height: 100%;
   @extend %flex-center;
 }
+
+.container:first-child {
+  margin-top: $__header_height;
+}

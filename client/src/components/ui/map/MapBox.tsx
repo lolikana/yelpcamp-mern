@@ -163,7 +163,7 @@ const MapBox: FC<Props> = ({ campgroundsData }) => {
 export default MapBox;
 
 const mapStyled = {
-  margin: '-2rem 0 2rem 0',
+  margin: '0 0 2rem 0',
   height: '300px',
   width: '100%'
 };

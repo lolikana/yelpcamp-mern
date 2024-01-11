@@ -22,7 +22,6 @@ body {
     'Helvetica Neue',
     sans-serif;
   height: 100vh;
-  display: grid;
   min-width: 245px;
   color: $__main;
   background-image: url('./../assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
@@ -30,6 +29,14 @@ body {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+#root {
+  height: 100%;
+}
+
+main {
+  padding: $__header_height 0;
 }
 
 input {
@@ -47,24 +54,17 @@ input {
     sans-serif;
 }
 
-main {
-  height: 100%;
-}
-
-main section:first-child {
-  padding: calc($__header_height + 2rem) 0 2rem;
-}
-
-main article:first-child {
-  padding-top: calc($__header_height + 2rem);
+main section {
+  &:first-child {
+    padding: $__header_height 0 2rem;
+  }
 }
 
 .page-article {
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 .form-section {
-  height: 100%;
   @extend %flex-center;
   flex-direction: column;
 
