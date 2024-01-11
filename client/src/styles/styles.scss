@@ -21,10 +21,15 @@ body {
     'Open Sans',
     'Helvetica Neue',
     sans-serif;
-
+  height: 100vh;
+  display: grid;
   min-width: 245px;
-  background-color: $__sub;
   color: $__main;
+  background-image: url('./../assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 input {
@@ -42,33 +47,20 @@ input {
     sans-serif;
 }
 
-#root {
-  height: 100vh;
-}
-
 main {
   height: 100%;
 }
 
 main section:first-child {
-  padding-top: 4rem;
+  padding: calc($__header_height + 2rem) 0 2rem;
 }
 
 main article:first-child {
-  padding-top: 6rem;
-}
-
-.page-article,
-.form-section {
-  background-image: url('./../assets/pars-sahin-V7uP-XzqX18-unsplash.jpg');
-  background-size: cover;
-  background-position: 50% 50%;
+  padding-top: calc($__header_height + 2rem);
 }
 
 .page-article {
   padding: 1rem;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
 }
 
 .form-section {
