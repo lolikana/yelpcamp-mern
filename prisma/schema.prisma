@@ -18,22 +18,28 @@ type CampgroundsImages {
   url      String
 }
 
-model campgrounds {
+model Campgrounds {
   id          String              @id @default(auto()) @map("_id") @db.ObjectId
-  v           Int                 @map("__v")
-  author      String              @db.ObjectId
+  v           Int                 @default(0) @map("__v") @ignore
+  author      Users               @relation(fields: [authorId], references: [id])
+  authorId    String              @map("author") @db.ObjectId
   description String
   geometry    CampgroundsGeometry
   images      CampgroundsImages[]
   location    String
   price       Int
   title       String
+
+  @@map("campgrounds")
 }
 
-model users {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  v        Int    @map("__v")
-  email    String @unique(map: "email_1")
-  password String
-  username String @unique(map: "username_1")
+model Users {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  v           Int           @default(0) @map("__v") @ignore
+  email       String        @unique(map: "email_1")
+  password    String
+  username    String        @unique(map: "username_1")
+  campgrounds Campgrounds[]
+
+  @@map("users")
 }
