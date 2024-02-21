@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type CampgroundsGeometry {
+  coordinates Float[]
+  type        String
+}
+
+type CampgroundsImages {
+  id       String @map("_id") @db.ObjectId
+  filename String
+  url      String
+}
+
+model campgrounds {
+  id          String              @id @default(auto()) @map("_id") @db.ObjectId
+  v           Int                 @map("__v")
+  author      String              @db.ObjectId
+  description String
+  geometry    CampgroundsGeometry
+  images      CampgroundsImages[]
+  location    String
+  price       Int
+  title       String
+}
+
+model users {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  v        Int    @map("__v")
+  email    String @unique(map: "email_1")
+  password String
+  username String @unique(map: "username_1")
+}
