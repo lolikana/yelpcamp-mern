@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
-import { User } from '../models';
+import prisma from './../configs/mongodb';
 
 export const signupSchema = z
   .object({
@@ -51,12 +51,11 @@ export const loginSchema = z
     password: z.string({ required_error: 'A password is required' }).trim()
   })
   .refine(async data => {
-    const isUserExist = await User.findOne({ email: data.email });
+    const isUserExist = await prisma.user.findUnique({
+      where: { email: data.email }
+    });
     if (!isUserExist) return Promise.reject('This email is not in our database.');
-    const isSamePassword = await bcrypt.compare(
-      data.password,
-      isUserExist.password as string
-    );
+    const isSamePassword = await bcrypt.compare(data.password, isUserExist.password);
     if (!isSamePassword) return Promise.reject('Wrong password');
 
     return Promise.resolve(true);

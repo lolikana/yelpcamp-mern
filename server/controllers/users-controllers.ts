@@ -2,22 +2,27 @@ import bcrypt from 'bcryptjs';
 import { RequestHandler } from 'express';
 
 import { loginSchema, signupSchema } from '../libs/validations';
+import prisma from './../configs/mongodb';
 import { ISignup } from './../libs/types';
-import { User } from './../models';
 import { ExpressError } from './../utils';
 import generateToken from './../utils/generateToken';
 
 export default {
   singup: (async (req, res, next) => {
+    const { username, email } = req.body as ISignup;
+
     try {
-      const { username, email } = req.body as ISignup;
-      const isUsernameExist = await User.findOne({ username });
-      if (isUsernameExist) {
+      const isUsernameExist = await prisma.user.findMany({
+        where: { username: username }
+      });
+      if (isUsernameExist.length !== 0) {
         const error = new ExpressError('This username is already taken.', 409);
         return next(error);
       }
-      const isEmailExist = await User.findOne({ email });
-      if (isEmailExist) {
+      const isEmailExist = await prisma.user.findMany({
+        where: { email: email }
+      });
+      if (isEmailExist.length !== 0) {
         const error = new ExpressError('This email is already used.', 409);
         return next(error);
       }
@@ -38,17 +43,29 @@ export default {
         return next(error);
       }
 
-      const newUser = new User({
-        username: result.data.username,
-        email: result.data.email,
-        password: hashedPassword
-      });
+      const newUser = await prisma.user
+        .create({
+          data: {
+            username: result.data.username,
+            email: result.data.email,
+            password: hashedPassword
+          }
+        })
+        .catch(err => {
+          const error = new ExpressError(
+            `Something went wrong when creating user: ${(err as { message: string }).message} `,
+            500
+          );
+          return next(error);
+        });
 
-      await newUser.save();
+      if (!newUser) {
+        const error = new ExpressError('Something went wrong when creating user.', 500);
+        return next(error);
+      }
 
-      const uid = newUser.id as string;
-      const userEmail = newUser.email as string;
-
+      const uid = newUser.id;
+      const userEmail = newUser.email;
       const token = generateToken(res, uid, userEmail);
 
       return res.status(201).send({ userId: uid, email: userEmail, token });
@@ -67,13 +84,15 @@ export default {
         );
         return next(error);
       }
-      const user = await User.findOne({ email: result.data.email });
+      const user = await prisma.user.findUnique({
+        where: { email: result.data.email }
+      });
       if (!user) {
         const error = new ExpressError('No user with this email was found.', 500);
         return next(error);
       }
-      const uid = user.id as string;
-      const userEmail = user.email as string;
+      const uid = user.id;
+      const userEmail = user.email;
 
       const token = generateToken(res, uid, userEmail);
 

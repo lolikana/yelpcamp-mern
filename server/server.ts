@@ -3,12 +3,11 @@ import cors from 'cors';
 import express, { ErrorRequestHandler } from 'express';
 import helmet from 'helmet';
 
-import { mongoConnection } from './configs';
 import { router as campgroundsRoutes } from './routes/campgrounds-routes';
 import { router as usersRoutes } from './routes/users-routes';
 import { ExpressError } from './utils';
 
-const isProduction = process.env.NODE_ENV === 'production';
+export const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.VITE_PORT || 3001;
 const app = express();
 
@@ -77,8 +76,6 @@ app.all('*', (_req, _res, next) => {
   next(new ExpressError('Page Not Found!!', 404));
 });
 
-mongoConnection()
-  .then(() => {
-    app.listen(port, () => console.log(`Server started at port: ${port}`));
-  })
-  .catch(err => console.log(err));
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

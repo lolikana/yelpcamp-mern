@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { isProduction } from './../configs/mongodb';
+import { isProduction } from './../server';
 
 const generateToken = (_res: Response, uid: string, email?: string) => {
   const token = jwt.sign(

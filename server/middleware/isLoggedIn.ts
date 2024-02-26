@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { isProduction } from './../configs/mongodb';
+import { isProduction } from './../server';
 import { ExpressError } from './../utils';
 
 export const isLoggedIn = ((req, _res, next) => {
