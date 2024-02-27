@@ -25,6 +25,8 @@ The project uses the following technologies:
 - React.js for building the user interface.
 - React Router for client-side routing.
 - Context API for state management.
+- Mapbox-gl
+- Swiper
   
 ### Backend:
 - Node.js and Express.js for building the server.
@@ -32,6 +34,7 @@ The project uses the following technologies:
 - Cloudinary for image storage and management.
 
 ## To-Dos
-- [ ] Implement image upload for campgrounds.
-- [ ] Ensure that deleting a campground also deletes associated files from Cloudinary.
+- [x] Implement image upload for campgrounds.
+- [x] Ensure that deleting a campground also deletes associated files from Cloudinary.
+- [x] Implement Mapbox-gl
 - [ ] Implement reviews 
