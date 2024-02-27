@@ -16,10 +16,10 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 const MapBox: FC<Props> = ({ campgroundsData }) => {
   const mapContainerRef = useRef(null);
   const positionRef = useRef<LngLatLike>(
-    campgroundsData.length === 0
-      ? [130.38342385048765, 33.59000491119994]
-      : (campgroundsData[Math.floor(Math.random() * campgroundsData.length)].geometry
+    campgroundsData.length !== 0
+      ? (campgroundsData[Math.floor(Math.random() * campgroundsData.length)].geometry
           .coordinates as LngLatLike)
+      : [0, 0]
   );
   const zoomRef = useRef(3);
 
