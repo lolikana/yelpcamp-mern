@@ -9,6 +9,7 @@
     "server": "cd server && npm run server",
     "dev": "concurrently \"npm run server\" \"npm run client:dev\"",
     "preview": "concurrently \"NODE_ENV=preview npm run server\" \"NODE_ENV=preview npm run client:prod\"",
+    "install": "concurrently \"cd client && npm i\" \"cd server && npm i\"",
     "lint": "eslint --fix -f table .",
     "lint-staged": "lint-staged",
     "prettier-format": "prettier --config .prettierrc './**/*.{tsx,ts,css,scss,json}' --write",
