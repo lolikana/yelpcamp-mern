@@ -1,4 +1,5 @@
 import mbxGeocoding from '@mapbox/mapbox-sdk/services/geocoding';
+import { Campground } from '@prisma/client';
 import { RequestHandler } from 'express';
 import { ICampground } from 'libs/types';
 
@@ -149,7 +150,20 @@ export default {
           authorId: req.userData.userId as string
         }
       });
-      res.json(campgrounds);
+
+      const getPopUpMarkup = (campground: Campground) => {
+        return `<div style="color:#000;"><strong><a href="/campgrounds/${campground.id}">${campground.title}</a></strong>
+				<p>${campground.location}</p></div>`;
+      };
+
+      const campgroundsWithMarkup = campgrounds.map(campground => ({
+        ...campground,
+        properties: {
+          popUpMarkup: getPopUpMarkup(campground)
+        }
+      }));
+
+      res.json(campgroundsWithMarkup);
     } catch (err) {
       const error = new ExpressError(
         'Something went wrong when fetching the campgrounds',

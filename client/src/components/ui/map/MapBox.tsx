@@ -1,6 +1,7 @@
-import { TResponseCampground } from '@components/campgrounds/types';
 import mapboxgl, { GeoJSONSource, LngLatLike, Map, MapLayerMouseEvent } from 'mapbox-gl';
 import { FC, useEffect, useRef } from 'react';
+
+import { TResponseCampground } from './../../campgrounds/types';
 
 // Extend the GeoJsonProperties type
 interface ExtendedGeoJsonProperties
@@ -17,8 +18,8 @@ const MapBox: FC<Props> = ({ campgroundsData }) => {
   const mapContainerRef = useRef(null);
   const positionRef = useRef<LngLatLike>(
     campgroundsData.length !== 0
-      ? (campgroundsData[Math.floor(Math.random() * campgroundsData.length)].geometry
-          .coordinates as LngLatLike)
+      ? campgroundsData[Math.floor(Math.random() * campgroundsData.length)].geometry
+          .coordinates ?? [0, 0]
       : [0, 0]
   );
   const zoomRef = useRef(3);
@@ -45,7 +46,6 @@ const MapBox: FC<Props> = ({ campgroundsData }) => {
         clusterMaxZoom: 14, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
       });
-
       map.addLayer({
         id: 'clusters',
         type: 'circle',
@@ -100,7 +100,6 @@ const MapBox: FC<Props> = ({ campgroundsData }) => {
         const features = map.queryRenderedFeatures(e.point, {
           layers: ['clusters']
         });
-
         if (features && features.length > 0) {
           const clusterId: number | undefined = features[0].properties
             ?.cluster_id as number;
@@ -131,7 +130,6 @@ const MapBox: FC<Props> = ({ campgroundsData }) => {
       map.on('click', 'unclustered-point', (e: MapLayerMouseEvent) => {
         const features = e.features;
         if (features === undefined) return;
-
         const coordinates: [number, number] =
           features[0].geometry.type === 'Point'
             ? (features[0].geometry.coordinates as [number, number])
