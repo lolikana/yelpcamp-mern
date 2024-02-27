@@ -59,7 +59,7 @@ export const loader = (id: string, token: string): { data: Record<string, unknow
 };
 
 export const action = async (id: string, token: string): Promise<Response> => {
-  const url = `${
+	const url = `${
     import.meta.env.PROD ? import.meta.env.VITE_SERVER_URL : ''
   }/api/campgrounds/${id}`;
   const method = 'DELETE';

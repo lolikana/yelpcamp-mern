@@ -7,25 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type CampgroundsGeometry {
+type CampgroundGeometry {
   coordinates Float[]
   type        String
 }
 
-type CampgroundsImages {
-  id       String @map("_id") @db.ObjectId
+type CampgroundImages {
   filename String
   url      String
 }
 
-model Campgrounds {
-  id          String              @id @default(auto()) @map("_id") @db.ObjectId
-  v           Int                 @default(0) @map("__v") @ignore
-  author      User                @relation(fields: [authorId], references: [id])
-  authorId    String              @map("author") @db.ObjectId
+model Campground {
+  id          String             @id @default(auto()) @map("_id") @db.ObjectId
+  v           Int                @default(0) @map("__v") @ignore
+  author      User               @relation(fields: [authorId], references: [id])
+  authorId    String             @map("author") @db.ObjectId
   description String
-  geometry    CampgroundsGeometry
-  images      CampgroundsImages[]
+  geometry    CampgroundGeometry
+  images      CampgroundImages[]
   location    String
   price       Int
   title       String
@@ -34,12 +33,12 @@ model Campgrounds {
 }
 
 model User {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  v           Int           @default(0) @map("__v") @ignore
-  email       String        @unique(map: "email_1")
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  v           Int          @default(0) @map("__v") @ignore
+  email       String       @unique(map: "email_1")
   password    String
-  username    String        @unique(map: "username_1")
-  campgrounds Campgrounds[]
+  username    String       @unique(map: "username_1")
+  campgrounds Campground[]
 
   @@map("users")
 }

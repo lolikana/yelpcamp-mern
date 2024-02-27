@@ -11,7 +11,7 @@ const CampgroundsList = (props: { campgrounds: TResponseCampground[] }) => {
       ) : (
         <>
           {campgrounds.map(campground => (
-            <li key={campground._id} className={`${styles.item} frame`}>
+            <li key={campground.id} className={`${styles.item} frame`}>
               <CampgroundsCard campground={campground} />
             </li>
           ))}

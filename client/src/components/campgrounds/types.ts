@@ -8,6 +8,6 @@ export type TCampground = {
 };
 
 export type TResponseCampground = {
-  _id: string;
+  id: string;
   images: { url: string; filename: string }[];
 } & TCampground;

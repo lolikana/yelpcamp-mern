@@ -11,14 +11,14 @@ export interface ISignup extends ILogin {
 }
 
 export interface IUser {
-  _id: Types.ObjectId;
+  id: Types.ObjectId;
   email: string;
   username: string;
   password: string;
 }
 
 export interface ICampground {
-  _id: Types.ObjectId;
+  id: Types.ObjectId;
   title: string;
   images: IImgCamp[];
   price: number;

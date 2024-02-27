@@ -1,12 +1,10 @@
 import mbxGeocoding from '@mapbox/mapbox-sdk/services/geocoding';
-import { UploadApiResponse } from 'cloudinary';
 import { RequestHandler } from 'express';
 import { ICampground } from 'libs/types';
-import { Types } from 'mongoose';
 
 import cloudinary from '../configs/cloudinary';
+import prisma from '../configs/mongodb';
 import { campgroundSchema } from '../libs/validations';
-import { CampgroundModel } from './../models/campground-model';
 import { ExpressError } from './../utils';
 
 const mapboxToken = process.env.MAPBOX_TOKEN;
@@ -24,21 +22,27 @@ export default {
         const error = new ExpressError(result.error.issues[0].message, 422);
         return next(error);
       }
+
       const geoData = await geocoder
         .forwardGeocode({ query: result.data.location, limit: 1 })
         .send();
-      const campground = new CampgroundModel(body);
-      campground.geometry = geoData.body.features[0].geometry;
 
-      if (!req.files) {
-        return next(new ExpressError('Please upload an image', 400));
-      }
+      const campground = await prisma.campground.create({
+        data: {
+          author: { connect: { id: req.userData.userId as string } },
+          description: result.data.description,
+          location: result.data.location,
+          price: +result.data.price,
+          title: result.data.title,
+          geometry: geoData.body.features[0].geometry,
+          images: []
+        }
+      });
 
-      campground.images = [];
-
+      const images: { url: string; filename: string }[] = [];
       if (Array.isArray(req.files)) {
         for (const file of req.files) {
-          (campground.images as { url: string; filename: string }[]).push({
+          images.push({
             url: file.path,
             filename: file.filename
           });
@@ -47,7 +51,7 @@ export default {
         for (const key in req.files) {
           if (Array.isArray(req.files[key])) {
             for (const file of req.files[key]) {
-              (campground.images as { url: string; filename: string }[]).push({
+              images.push({
                 url: file.path,
                 filename: file.filename
               });
@@ -56,10 +60,15 @@ export default {
         }
       }
 
-      campground.author = new Types.ObjectId(req.userData.userId as string);
-      await campground.save();
+      await prisma.campground.update({
+        where: { id: campground.id },
+        data: {
+          images
+        }
+      });
+
       res.json({
-        campgroundId: campground.id as string
+        campgroundId: campground.id
       });
     } catch (err) {
       if (err instanceof Error) {
@@ -87,28 +96,40 @@ export default {
       const geoData = await geocoder
         .forwardGeocode({ query: result.data.location, limit: 1 })
         .send();
+      const campground = await prisma.campground.findFirst({
+        where: {
+          authorId: req.userData.userId as string,
+          id: campgroundId
+        }
+      });
 
-      const campground = await CampgroundModel.findOneAndUpdate(
-        {
-          author: req.userData.userId as string,
-          _id: campgroundId
-        },
-        { ...result.data, geometry: geoData.body.features[0].geometry },
-        { new: true }
-      );
-
-      const images: { url: string; filename: string }[] = (
-        req.files as UploadApiResponse
-      ).map((file: any) => ({
-        url: file.path,
-        filename: file.filename
-      }));
-
-      if (images.length !== 0) {
-        (campground?.images as { url: string; filename: string }[]).push(...images);
-        await campground?.save();
+      if (!campground) {
+        const error = new ExpressError('Campground not found', 404);
+        return next(error);
       }
 
+      const images: { url: string; filename: string }[] = campground.images;
+      if (req.files) {
+        (req.files as Express.Multer.File[]).forEach((file: Express.Multer.File) => {
+          images.push({
+            url: file.path,
+            filename: file.filename
+          });
+        });
+      }
+
+      await prisma.campground.update({
+        where: { id: campgroundId, authorId: req.userData.userId as string },
+        data: {
+          author: { connect: { id: req.userData.userId as string } },
+          description: result.data.description,
+          location: result.data.location,
+          price: +result.data.price,
+          title: result.data.title,
+          geometry: geoData.body.features[0].geometry,
+          images: images
+        }
+      });
       res.json({
         campgroundId: campgroundId
       });
@@ -123,10 +144,11 @@ export default {
 
   readAll: (async (req, res, next) => {
     try {
-      const campgrounds = await CampgroundModel.find({
-        author: req.userData.userId as string
+      const campgrounds = await prisma.campground.findMany({
+        where: {
+          authorId: req.userData.userId as string
+        }
       });
-
       res.json(campgrounds);
     } catch (err) {
       const error = new ExpressError(
@@ -140,9 +162,11 @@ export default {
   readOne: (async (req, res, next) => {
     try {
       const { campgroundId } = req.params;
-      const campground = await CampgroundModel.findOne({
-        author: req.userData.userId as string,
-        _id: campgroundId
+      const campground = await prisma.campground.findFirst({
+        where: {
+          authorId: req.userData.userId as string,
+          id: campgroundId
+        }
       });
       res.json(campground);
     } catch (err) {
@@ -157,17 +181,32 @@ export default {
   delete: (async (req, res, next) => {
     try {
       const { campgroundId } = req.params;
-      const campground = await CampgroundModel.findById(campgroundId);
-      await CampgroundModel.findOneAndDelete({
-        author: req.userData.userId as string,
-        _id: campgroundId
+      const campground = await prisma.campground.findFirst({
+        where: {
+          authorId: req.userData.userId as string,
+          id: campgroundId
+        }
       });
-      if (campground) {
-        (campground.images as { url: string; filename: string }[]).map(
-          async img => await cloudinary.uploader.destroy(img.filename)
-        );
+
+      if (!campground) {
+        const error = new ExpressError('Campground not found', 404);
+        return next(error);
       }
-      res.status(200).json({ message: 'Deleted campground.' });
+
+      await Promise.all(
+        campground.images.map(async img => {
+          void (await cloudinary.uploader.destroy(img.filename));
+        })
+      );
+
+      await prisma.campground.delete({
+        where: {
+          authorId: req.userData.userId as string,
+          id: campgroundId
+        }
+      });
+
+      res.status(200).json({ message: 'Deleted campground.' }) as unknown as Response;
     } catch (err) {
       const error = new ExpressError(
         'Something went wrong when trying to delete the campground',

@@ -7,11 +7,11 @@ import { TResponseCampground } from './../../campgrounds/types';
 import styles from './CampgroundsCard.module.scss';
 
 const CampgroundsCard = (props: { campground: TResponseCampground }) => {
-  const { _id, title, images, location, description } = props.campground;
+  const { id, title, images, location, description } = props.campground;
 
   return (
     <div className={styles.card}>
-      <Link to={`/campgrounds/${_id}`} className={styles.card__image}>
+      <Link to={`/campgrounds/${id}`} className={styles.card__image}>
         <img src={images.length !== 0 ? images[0].url : NoImage} alt="" />
       </Link>
       <div className={styles.card__text}>
@@ -30,7 +30,7 @@ const CampgroundsCard = (props: { campground: TResponseCampground }) => {
           <p>{description}</p>
         </div>
         <div>
-          <ButtonLink path={`/campgrounds/${_id}`} text="View more" style="blue" />
+          <ButtonLink path={`/campgrounds/${id}`} text="View more" style="blue" />
         </div>
       </div>
     </div>
