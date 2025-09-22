@@ -54,7 +54,7 @@
     "lint-staged": "^13.2.3",
     "mapbox-gl": "^2.15.0",
     "prettier": "^3.0.0",
-    "typescript": "^5.0.2",
+    "typescript": "^5.9.2",
     "zod": "^3.22.3"
   }
 }
